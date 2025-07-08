@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/PerModelScene.unity
+    guid: 97de83151c7ead94e823df0325f55a96
+  - enabled: 0
+    path: Assets/Scenes/ARCHIVE/G2_5.unity
+    guid: e9edc65f8d6cbc6499d1b0e2a6be3f51
+  - enabled: 0
+    path: Assets/Scenes/ARCHIVE/G5_2_3.unity
+    guid: 262d6de25747cac48a178d0d4b4d10fb
+  - enabled: 0
+    path: Assets/Scenes/ARCHIVE/G2_3.unity
+    guid: ecc3684ba704d69429a5a0cc817ec623
+  - enabled: 0
+    path: Assets/Scenes/G5_6.unity
+    guid: 3d801dcee41cbfc4d9da24ce20e6df6f
+  - enabled: 0
+    path: Assets/Scenes/G4.unity
+    guid: 5eb13ae3fcf00b94ebb9cb9d834ebb0e
+  - enabled: 0
+    path: Assets/Scenes/G7_8_9.unity
+    guid: c260645b65254dc4fa0baf629a219881
+  - enabled: 1
+    path: Assets/Scenes/G10.unity
+    guid: 8548ed0812ecbbc428b8e44f7915b0c7
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 2181b6a44f6f55c43b1e38148db2a852, type: 2}
+    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 234f8d7f01eaa3f40bc9dd86d60390ce, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 542e4fa4792d2ed40abfbaf9467434cb, type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 29935773aa3f3fa448ed575987042809, type: 2}
