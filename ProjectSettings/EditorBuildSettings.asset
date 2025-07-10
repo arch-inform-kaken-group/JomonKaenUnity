@@ -29,6 +29,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/G10.unity
     guid: 8548ed0812ecbbc428b8e44f7915b0c7
+  - enabled: 0
+    path: Assets/Scenes/G11_12_13.unity
+    guid: e2bd59fb50da8e642a7ae497f2d3b0f5
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 2181b6a44f6f55c43b1e38148db2a852, type: 2}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 234f8d7f01eaa3f40bc9dd86d60390ce, type: 2}

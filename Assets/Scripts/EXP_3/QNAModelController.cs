@@ -57,7 +57,7 @@ public class QNAModelController : MonoBehaviour
     // Change this mapping for each deployment according to the group
     // 各デプロイメントにおいて、グループに応じてこのマッピングを変更してください。
     private Dictionary<int, string> groupTextMap = new Dictionary<int, string> {
-        {0, "10" }
+        {0, "14" },
     };
     void Awake() // Use Awake to get component reference before Start
     {
