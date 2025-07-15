@@ -1598,10 +1598,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6627850204167133710, guid: 10adb4698950bad4e958a3a1c914bb47, type: 3}
       insertIndex: -1
       addedObject: {fileID: 116751203}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5309537340739160936, guid: 10adb4698950bad4e958a3a1c914bb47, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10adb4698950bad4e958a3a1c914bb47, type: 3}
 --- !u!4 &159128629 stripped
 Transform:
@@ -5250,10 +5247,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6627850204167133710, guid: 10adb4698950bad4e958a3a1c914bb47, type: 3}
       insertIndex: -1
       addedObject: {fileID: 671207940}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5309537340739160936, guid: 10adb4698950bad4e958a3a1c914bb47, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10adb4698950bad4e958a3a1c914bb47, type: 3}
 --- !u!4 &553012923 stripped
 Transform:
@@ -12801,10 +12795,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6627850204167133710, guid: 10adb4698950bad4e958a3a1c914bb47, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1945907030}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5309537340739160936, guid: 10adb4698950bad4e958a3a1c914bb47, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10adb4698950bad4e958a3a1c914bb47, type: 3}
 --- !u!4 &1498695093 stripped
 Transform:
@@ -14914,10 +14905,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6627850204167133710, guid: 10adb4698950bad4e958a3a1c914bb47, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1219352478}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5309537340739160936, guid: 10adb4698950bad4e958a3a1c914bb47, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10adb4698950bad4e958a3a1c914bb47, type: 3}
 --- !u!4 &1715053363 stripped
 Transform:
