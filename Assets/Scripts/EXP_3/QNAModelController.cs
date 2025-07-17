@@ -54,13 +54,14 @@ public class QNAModelController : MonoBehaviour
 
     private int groupIndex = 0;
 
-    // Change this mapping for each deployment according to the group
-    // 各デプロイメントにおいて、グループに応じてこのマッピングを変更してください。
-    private Dictionary<int, string> groupTextMap = new Dictionary<int, string> {
-        {0, "15" },
-        {1, "16" },
-        {2, "17" },
-    };
+    //// Change this mapping for each deployment according to the group
+    //// 各デプロイメントにおいて、グループに応じてこのマッピングを変更してください。
+    //private Dictionary<int, string> groupTextMap = new Dictionary<int, string> {
+    //    {0, "15" },
+    //    {1, "16" },
+    //    {2, "17" },
+    //};
+
     void Awake() // Use Awake to get component reference before Start
     {
         qnaPrompt = QNAPrompt;
@@ -94,7 +95,7 @@ public class QNAModelController : MonoBehaviour
 
         group = groups[0];
         models = group.GetComponent<GroupItems>().GetModels();
-        groupPromptObject.GetComponent<TextMeshPro>().SetText(groupTextMap[0]);
+        groupPromptObject.GetComponent<TextMeshPro>().SetText(group.name);
 
         for (int i = 0; i < models.Count; i++) 
         {
@@ -255,7 +256,7 @@ public class QNAModelController : MonoBehaviour
         }
 
         promptObject.SetActive(false);
-        groupPromptObject.GetComponent<TextMeshPro>().SetText(groupTextMap[groupNumber]);
+        groupPromptObject.GetComponent<TextMeshPro>().SetText(group.name);
 
         groupIndex = groupNumber;
 

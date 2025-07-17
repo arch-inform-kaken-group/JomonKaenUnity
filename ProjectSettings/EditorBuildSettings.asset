@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/PerModelScene.unity
+    path: Assets/Scenes/ARCHIVE/PerModelScene.unity
     guid: 97de83151c7ead94e823df0325f55a96
   - enabled: 0
     path: Assets/Scenes/ARCHIVE/G2_5.unity
@@ -18,25 +18,25 @@ EditorBuildSettings:
     path: Assets/Scenes/ARCHIVE/G2_3.unity
     guid: ecc3684ba704d69429a5a0cc817ec623
   - enabled: 0
-    path: Assets/Scenes/G5_6.unity
+    path: Assets/Scenes/MALAYSIA/G5_6_9.unity
     guid: 3d801dcee41cbfc4d9da24ce20e6df6f
   - enabled: 0
-    path: Assets/Scenes/G4.unity
+    path: Assets/Scenes/MALAYSIA/G3_4.unity
     guid: 5eb13ae3fcf00b94ebb9cb9d834ebb0e
   - enabled: 0
-    path: Assets/Scenes/G7_8_9.unity
+    path: Assets/Scenes/MALAYSIA/G7_8_10.unity
     guid: c260645b65254dc4fa0baf629a219881
   - enabled: 0
-    path: Assets/Scenes/G10.unity
+    path: Assets/Scenes/MALAYSIA/G10.unity
     guid: 8548ed0812ecbbc428b8e44f7915b0c7
   - enabled: 0
-    path: Assets/Scenes/G11_12_13.unity
+    path: Assets/Scenes/MALAYSIA/G11_13.unity
     guid: e2bd59fb50da8e642a7ae497f2d3b0f5
   - enabled: 0
-    path: Assets/Scenes/G14.unity
+    path: Assets/Scenes/MALAYSIA/G12_14.unity
     guid: b42021f890602d544b9e27336e3ec8e3
   - enabled: 0
-    path: Assets/Scenes/G15_16_17.unity
+    path: Assets/Scenes/MALAYSIA/G15_16.unity
     guid: b533903b4090ff2428504924c0978587
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 2181b6a44f6f55c43b1e38148db2a852, type: 2}
