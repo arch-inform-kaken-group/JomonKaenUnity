@@ -4620,10 +4620,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6627850204167133710, guid: 10adb4698950bad4e958a3a1c914bb47, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1522130779}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5309537340739160936, guid: 10adb4698950bad4e958a3a1c914bb47, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10adb4698950bad4e958a3a1c914bb47, type: 3}
 --- !u!4 &490419109 stripped
 Transform:
@@ -9645,14 +9642,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   models:
   - {fileID: 1522130778}
-  - {fileID: 1146907592}
   - {fileID: 1219352477}
-  - {fileID: 315347773}
   - {fileID: 671207939}
-  - {fileID: 296083622}
   - {fileID: 116751202}
-  - {fileID: 198018973}
   - {fileID: 1945907029}
+  - {fileID: 198018973}
 --- !u!114 &1167509716
 MonoBehaviour:
   m_ObjectHideFlags: 0
