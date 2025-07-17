@@ -10063,7 +10063,7 @@ MonoBehaviour:
   - {fileID: 853036457}
   - {fileID: 1993491318}
   - {fileID: 966984199}
-  - {fileID: 1193440197}
+  - {fileID: 55816475}
 --- !u!114 &1167509716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10554,11 +10554,6 @@ GameObject:
 --- !u!1 &1193440196 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6611612164228763974, guid: 10adb4698950bad4e958a3a1c914bb47, type: 3}
-  m_PrefabInstance: {fileID: 1193440193}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1193440197 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1587842936086636861, guid: 10adb4698950bad4e958a3a1c914bb47, type: 3}
   m_PrefabInstance: {fileID: 1193440193}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1194052576
