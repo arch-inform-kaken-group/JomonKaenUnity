@@ -11280,6 +11280,7 @@ MonoBehaviour:
   adminOffUI: {fileID: 1197695588}
   startButton: {fileID: 856720579}
   QNAPrompt: {fileID: 1828955808}
+  languageQNA: {fileID: 3003334015865490606, guid: 4e9368f3d7f4c974c899deddbf882c69, type: 3}
 --- !u!82 &1362956098
 AudioSource:
   m_ObjectHideFlags: 0
@@ -14956,10 +14957,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6627850204167133710, guid: 10adb4698950bad4e958a3a1c914bb47, type: 3}
       insertIndex: -1
       addedObject: {fileID: 259662212}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5309537340739160936, guid: 10adb4698950bad4e958a3a1c914bb47, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10adb4698950bad4e958a3a1c914bb47, type: 3}
 --- !u!4 &1825360894 stripped
 Transform:

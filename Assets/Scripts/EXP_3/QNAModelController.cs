@@ -8,6 +8,10 @@ using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.SampleGazeData;
 using Microsoft.MixedReality.Toolkit.SpatialAwareness;
 using Microsoft.MixedReality.Toolkit;
+using Microsoft.MixedReality.Toolkit.Utilities;
+using static QNAModelGazeRecorder;
+using System.IO;
+using System.Text;
 
 /// <summary>
 /// Main control script for the experiment, functions include
@@ -39,6 +43,10 @@ public class QNAModelController : MonoBehaviour
     [SerializeField] private GameObject startButton;
     [SerializeField] private GameObject QNAPrompt;
     [SerializeField] private static GameObject qnaPrompt;
+
+    [SerializeField] private GameObject languageQNA;
+    private GameObject popupInstance;
+    private bool isAskingLanguage = false;
 
     private List<GameObject> models = new List<GameObject>();
     private int currentModelIndex = 0;
@@ -103,6 +111,8 @@ public class QNAModelController : MonoBehaviour
         }
 
         LoadModel();
+
+        ShowQuestionnaire();
     }
 
     void Update()
@@ -110,6 +120,30 @@ public class QNAModelController : MonoBehaviour
         if (recorded)
         {
             LoadNext();
+        }
+
+        if (isAskingLanguage)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKey(KeyCode.Keypad4))
+            {
+                OnQuestionnaireAnswered("ENGLISH");
+            } 
+            else if (Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKey(KeyCode.Keypad5))
+            {
+                OnQuestionnaireAnswered("MALAY");
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha6) || Input.GetKey(KeyCode.Keypad6))
+            {
+                OnQuestionnaireAnswered("MANDARIN");
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha8) || Input.GetKey(KeyCode.Keypad8))
+            {
+                OnQuestionnaireAnswered("TAMIL");
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKey(KeyCode.Keypad2))
+            {
+                OnQuestionnaireAnswered("OTHER");
+            }
         }
 
         if (currentModelIndex == 0 && !currentModel.GetComponent<QNAModelGazeRecorder>().isRecording)
@@ -139,7 +173,7 @@ public class QNAModelController : MonoBehaviour
 
     public void StartRecording()
     {
-        if (!currentModel.GetComponent<QNAModelGazeRecorder>().isRecording && !recorded)
+        if (!currentModel.GetComponent<QNAModelGazeRecorder>().isRecording && !recorded && !isAskingLanguage)
         {
             groupPromptObject.SetActive(false);
             qnaPrompt.SetActive(true);
@@ -195,7 +229,7 @@ public class QNAModelController : MonoBehaviour
 
     public void LoadPrevious()
     {
-        if ((!currentModel.GetComponent<QNAModelGazeRecorder>().isRecording && recorded) || admin)
+        if (((!currentModel.GetComponent<QNAModelGazeRecorder>().isRecording && recorded) || admin) && !isAskingLanguage)
         {
             if (currentModelIndex == 0)
             {
@@ -214,7 +248,7 @@ public class QNAModelController : MonoBehaviour
 
     public void LoadNext()
     {
-        if ((!currentModel.GetComponent<QNAModelGazeRecorder>().isRecording && recorded) || admin)
+        if (((!currentModel.GetComponent<QNAModelGazeRecorder>().isRecording && recorded) || admin) && !isAskingLanguage)
         {
             if (currentModelIndex == models.Count - 1)
             {
@@ -262,6 +296,15 @@ public class QNAModelController : MonoBehaviour
 
         currentModelIndex = 0;
         LoadModel();
+
+        if (popupInstance != null)
+        {
+            Destroy(popupInstance.gameObject);
+            ShowQuestionnaire();
+        } else
+        {
+            ShowQuestionnaire();
+        }
     }
 
     public List<GameObject> GetGroups()
@@ -396,6 +439,37 @@ public class QNAModelController : MonoBehaviour
                 data[i] = 0f;
             }
         }
+    }
+    #endregion
+
+    #region LANGUAGE QNA
+    private void ShowQuestionnaire()
+    {
+        if (languageQNA == null)
+        {
+            Debug.LogError("Questionnaire popup prefab is not assigned!");
+            return;
+        }
+        isAskingLanguage = true;
+        popupInstance = Instantiate(languageQNA);
+        popupInstance.SetActive(true);
+        popupInstance.transform.position = CameraCache.Main.transform.position + CameraCache.Main.transform.forward * 0.4f; // x meters in front
+        popupInstance.transform.forward = CameraCache.Main.transform.forward; // Orient towards the user
+    }
+
+    private void OnQuestionnaireAnswered(string selectedAnswer)
+    {
+        string saveDir = Path.Combine(Application.persistentDataPath, sessionPath);
+        if (!Directory.Exists(saveDir))
+        {
+            Directory.CreateDirectory(saveDir);
+        }
+        StringBuilder language_sb = new StringBuilder();
+        language_sb.AppendLine("language");
+        language_sb.AppendLine(selectedAnswer);
+        File.WriteAllText(Path.Combine(saveDir, "language.txt"), language_sb.ToString());
+        isAskingLanguage = false;
+        Destroy(popupInstance.gameObject);
     }
     #endregion
 }

@@ -103,7 +103,8 @@ public class QNAModelGazeRecorder : MonoBehaviour
 
     // Audio recording prompt variables
     private Vector3 promptInitialPosition;
-    private string question = "「この土器/土偶の全体的あるいは部分的な印象をなるべく具体的な言葉を使って45秒以内で話してください」";
+    //private string question = "「この土器/土偶の全体的あるいは部分的な印象をなるべく具体的な言葉を使って45秒以内で話してください」";
+    private string question = "Please speak your overall or partial impression of this pottery/clay figurine in 45 seconds or less using as specific words as possible.";
     private float rotationSpeed = 5f;
     private float rotationThresholdDegrees = 1.0f;
     private float followDistance = 1.5f;
@@ -116,13 +117,21 @@ public class QNAModelGazeRecorder : MonoBehaviour
     private Vector3 targetPosition; // The position we are trying to achieve
 
     // QNA variables
+    //private string[] answerChoices = new string[]
+    //{
+    //    "面白い・気になる形だ",
+    //    "不思議・意味不明",
+    //    "何も感じない",
+    //    "不気味・不安・怖い",
+    //    "美しい・芸術的だ",
+    //};
     private string[] answerChoices = new string[]
     {
-        "面白い・気になる形だ",
-        "不思議・意味不明",
-        "何も感じない",
-        "不気味・不安・怖い",
-        "美しい・芸術的だ",
+        "Interesting and attentional shape",
+        "Strange and incomprehensible",
+        "Feel nothing",
+        "Creepy / unsettling / scary",
+        "Beautiful and artistic",
     };
     private bool isPlayingAudio = false;
     private float audioTimer = 1.0f;
@@ -137,7 +146,8 @@ public class QNAModelGazeRecorder : MonoBehaviour
 
         promptObject.SetActive(true);
         promptInitialPosition = promptObject.transform.localPosition;
-        promptObject.GetComponent<TextMeshPro>().SetText("「Enter」キーを押してください");
+        //promptObject.GetComponent<TextMeshPro>().SetText("「Enter」キーを押してください");
+        promptObject.GetComponent<TextMeshPro>().SetText("Press 'ENTER'");
 
         // audio prompt
         if (objectWithCollider == null)
@@ -455,7 +465,8 @@ public class QNAModelGazeRecorder : MonoBehaviour
             SetIsRecording(false);
         }
         currentSession = new QNAModelGazeRecorder.SessionData();
-        promptObject.GetComponent<TextMeshPro>().SetText("「Enter」キーを押してください");
+        //promptObject.GetComponent<TextMeshPro>().SetText("「Enter」キーを押してください");
+        promptObject.GetComponent<TextMeshPro>().SetText("Press 'ENTER'");
 
         if (heatmapSource != null)
         {

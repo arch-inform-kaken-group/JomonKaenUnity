@@ -14403,6 +14403,7 @@ MonoBehaviour:
   adminOffUI: {fileID: 1197695588}
   startButton: {fileID: 856720579}
   QNAPrompt: {fileID: 1828955808}
+  languageQNA: {fileID: 3003334015865490606, guid: 4e9368f3d7f4c974c899deddbf882c69, type: 3}
 --- !u!82 &1362956098
 AudioSource:
   m_ObjectHideFlags: 0
