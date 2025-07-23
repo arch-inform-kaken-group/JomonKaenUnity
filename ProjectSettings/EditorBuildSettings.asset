@@ -30,10 +30,10 @@ EditorBuildSettings:
     path: Assets/Scenes/MALAYSIA/G10.unity
     guid: 8548ed0812ecbbc428b8e44f7915b0c7
   - enabled: 0
-    path: Assets/Scenes/MALAYSIA/G11_13.unity
+    path: Assets/Scenes/MALAYSIA/G11_12.unity
     guid: e2bd59fb50da8e642a7ae497f2d3b0f5
   - enabled: 0
-    path: Assets/Scenes/MALAYSIA/G12_14.unity
+    path: Assets/Scenes/MALAYSIA/G13_14.unity
     guid: b42021f890602d544b9e27336e3ec8e3
   - enabled: 0
     path: Assets/Scenes/MALAYSIA/G15_16.unity
