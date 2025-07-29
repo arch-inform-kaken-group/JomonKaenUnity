@@ -18,9 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/ARCHIVE/G2_3.unity
     guid: ecc3684ba704d69429a5a0cc817ec623
   - enabled: 0
-    path: Assets/Scenes/MALAYSIA/G5_6_9.unity
+    path: Assets/Scenes/MALAYSIA/G5_6.unity
     guid: 3d801dcee41cbfc4d9da24ce20e6df6f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MALAYSIA/G3_4.unity
     guid: 5eb13ae3fcf00b94ebb9cb9d834ebb0e
   - enabled: 0
