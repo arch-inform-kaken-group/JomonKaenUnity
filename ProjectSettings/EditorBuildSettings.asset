@@ -17,7 +17,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/ARCHIVE/G2_3.unity
     guid: ecc3684ba704d69429a5a0cc817ec623
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MALAYSIA/G5_6.unity
     guid: 3d801dcee41cbfc4d9da24ce20e6df6f
   - enabled: 0
@@ -38,6 +38,15 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MALAYSIA/G9_10.unity
     guid: b6e23e12a07eed54da4024b5e15ebf41
+  - enabled: 0
+    path: Assets/Scenes/MALAYSIA/G6_8.unity
+    guid: 948a1cbebe69fa5489345a113db23805
+  - enabled: 0
+    path: Assets/Scenes/MALAYSIA/G17_1.unity
+    guid: e144e85e1199e5e44b4089483b45b2a0
+  - enabled: 1
+    path: Assets/Scenes/Rembak7.unity
+    guid: 16aa6db02ee79a04fb943b0701b8f361
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 2181b6a44f6f55c43b1e38148db2a852, type: 2}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 234f8d7f01eaa3f40bc9dd86d60390ce, type: 2}
