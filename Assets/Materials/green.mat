@@ -7,13 +7,12 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: gazed_at_mat
-  m_Shader: {fileID: 4800000, guid: 5bdea20278144b11916d77503ba1467a, type: 3}
+  m_Name: green
+  m_Shader: {fileID: 4800000, guid: 0d386f22debbb2a45a8506187259db49, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _DISABLE_ALBEDO_MAP
-  - _HOVER_LIGHT
   - _SPECULAR_HIGHLIGHTS
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -117,7 +116,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HoverLight: 1
+    - _HoverLight: 0
     - _IgnoreZScale: 0
     - _IndependentCorners: 0
     - _InnerGlow: 0
@@ -167,7 +166,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _ClippingBorderColor: {r: 1, g: 0.19999996, b: 0, a: 1}
-    - _Color: {r: 0.3830188, g: 1, b: 0.9847659, a: 1}
+    - _Color: {r: 0.20943397, g: 1, b: 0.24281421, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - _EnvironmentColorX: {r: 1, g: 0, b: 0, a: 1}

@@ -13848,6 +13848,12 @@ MonoBehaviour:
   startButton: {fileID: 856720579}
   QNAPrompt: {fileID: 1828955808}
   languageQNA: {fileID: 3003334015865490606, guid: 4e9368f3d7f4c974c899deddbf882c69, type: 3}
+  markerPrefabs:
+  - {fileID: 5633361458767155208, guid: 10c731fb00554054a8b5ade1d449f614, type: 3}
+  - {fileID: 5565538857692257015, guid: 43504c48a138b4c4b8ceb699f934c03b, type: 3}
+  - {fileID: 8118896106304649388, guid: 9bf565296b5068843adce667b2d9c9bb, type: 3}
+  - {fileID: 7055515552279567787, guid: a13e8c152bff8434ba41da3307e7a8d4, type: 3}
+  - {fileID: 8742322480240662461, guid: ba9559ce70358894581a7ea011d2102c, type: 3}
 --- !u!82 &1362956098
 AudioSource:
   m_ObjectHideFlags: 0

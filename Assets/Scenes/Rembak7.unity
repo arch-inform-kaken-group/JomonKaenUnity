@@ -97,7 +97,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 531122369}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3803,6 +3803,70 @@ Transform:
   - {fileID: 1165005775}
   m_Father: {fileID: 741630189}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!850595691 &531122369
+LightingSettings:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 6
+  m_GIWorkflowMode: 1
+  m_EnableBakedLightmaps: 1
+  m_EnableRealtimeLightmaps: 0
+  m_RealtimeEnvironmentLighting: 1
+  m_BounceScale: 1
+  m_AlbedoBoost: 1
+  m_IndirectOutputScale: 1
+  m_UsingShadowmask: 1
+  m_BakeBackend: 1
+  m_LightmapMaxSize: 1024
+  m_BakeResolution: 40
+  m_Padding: 2
+  m_LightmapCompression: 3
+  m_AO: 0
+  m_AOMaxDistance: 1
+  m_CompAOExponent: 1
+  m_CompAOExponentDirect: 0
+  m_ExtractAO: 0
+  m_MixedBakeMode: 2
+  m_LightmapsBakeMode: 1
+  m_FilterMode: 1
+  m_LightmapParameters: {fileID: 15204, guid: 0000000000000000f000000000000000, type: 0}
+  m_ExportTrainingData: 0
+  m_TrainingDataDestination: TrainingData
+  m_RealtimeResolution: 2
+  m_ForceWhiteAlbedo: 0
+  m_ForceUpdates: 0
+  m_FinalGather: 0
+  m_FinalGatherRayCount: 256
+  m_FinalGatherFiltering: 1
+  m_PVRCulling: 1
+  m_PVRSampling: 1
+  m_PVRDirectSampleCount: 32
+  m_PVRSampleCount: 512
+  m_PVREnvironmentSampleCount: 256
+  m_PVREnvironmentReferencePointCount: 2048
+  m_LightProbeSampleCountMultiplier: 4
+  m_PVRBounces: 2
+  m_PVRMinBounces: 2
+  m_PVREnvironmentImportanceSampling: 1
+  m_PVRFilteringMode: 1
+  m_PVRDenoiserTypeDirect: 1
+  m_PVRDenoiserTypeIndirect: 1
+  m_PVRDenoiserTypeAO: 1
+  m_PVRFilterTypeDirect: 0
+  m_PVRFilterTypeIndirect: 0
+  m_PVRFilterTypeAO: 0
+  m_PVRFilteringGaussRadiusDirect: 1
+  m_PVRFilteringGaussRadiusIndirect: 5
+  m_PVRFilteringGaussRadiusAO: 2
+  m_PVRFilteringAtrousPositionSigmaDirect: 0.5
+  m_PVRFilteringAtrousPositionSigmaIndirect: 2
+  m_PVRFilteringAtrousPositionSigmaAO: 1
+  m_PVRTiledBaking: 0
+  m_NumRaysToShootPerTexel: -1
+  m_RespectSceneVisibilityWhenBakingGI: 0
 --- !u!1 &534652411
 GameObject:
   m_ObjectHideFlags: 0
@@ -6464,7 +6528,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1587842936086636861, guid: 10adb4698950bad4e958a3a1c914bb47, type: 3}
       propertyPath: m_Name
-      value: rembak7
+      value: rembak7(A)
       objectReference: {fileID: 0}
     - target: {fileID: 1587842936086636861, guid: 10adb4698950bad4e958a3a1c914bb47, type: 3}
       propertyPath: m_IsActive
@@ -10133,6 +10197,12 @@ MonoBehaviour:
   startButton: {fileID: 856720579}
   QNAPrompt: {fileID: 1828955808}
   languageQNA: {fileID: 3003334015865490606, guid: 4e9368f3d7f4c974c899deddbf882c69, type: 3}
+  markerPrefabs:
+  - {fileID: 5633361458767155208, guid: 10c731fb00554054a8b5ade1d449f614, type: 3}
+  - {fileID: 5565538857692257015, guid: 43504c48a138b4c4b8ceb699f934c03b, type: 3}
+  - {fileID: 8118896106304649388, guid: 9bf565296b5068843adce667b2d9c9bb, type: 3}
+  - {fileID: 7055515552279567787, guid: a13e8c152bff8434ba41da3307e7a8d4, type: 3}
+  - {fileID: 8742322480240662461, guid: ba9559ce70358894581a7ea011d2102c, type: 3}
 --- !u!82 &1362956098
 AudioSource:
   m_ObjectHideFlags: 0
@@ -16152,7 +16222,7 @@ GameObject:
   - component: {fileID: 8164078558499466185}
   - component: {fileID: 8164078558499466184}
   m_Layer: 0
-  m_Name: default
+  m_Name: rembak7(A)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16211,7 +16281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HeatmapLookUpTable: {fileID: 2800000, guid: 0a82eb85d452c69468f035b9786f2abf, type: 2}
-  drawBrushSize: 1000
+  drawBrushSize: 200
   drawIntensity: 50
   minThreshDeltaHeatMap: 0.001
   useRaycastForUV: 1

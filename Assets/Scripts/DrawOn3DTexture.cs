@@ -1,6 +1,7 @@
-using Microsoft.MixedReality.Toolkit;
+﻿using Microsoft.MixedReality.Toolkit;
 using Microsoft.MixedReality.Toolkit.Input;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Microsoft.MixedReality.Toolkit.SampleGazeData
@@ -8,6 +9,7 @@ namespace Microsoft.MixedReality.Toolkit.SampleGazeData
     [AddComponentMenu("Scripts/DrawOn3DTexture")]
     public class DrawOn3DTexture : MonoBehaviour
     {
+        [Header("Heatmap Settings")]
         public Texture2D HeatmapLookUpTable;
 
         [SerializeField]
@@ -22,13 +24,14 @@ namespace Microsoft.MixedReality.Toolkit.SampleGazeData
         [SerializeField]
         private bool useRaycastForUV = true; // Use mesh raycast hit info for more accurate UV mapping
 
+        private GameObject[] markerPrefabs;
+        private Transform markerContainer;
+
         public bool UseLiveInputStream = true;
+        public Material HeatmapOverlayMaterialTemplate;
 
         private Texture2D myDrawTex;
         private Renderer myRenderer;
-
-        public Material HeatmapOverlayMaterialTemplate;
-
         private EyeTrackingTarget eyeTarget = null;
 
         private EyeTrackingTarget EyeTarget
@@ -45,6 +48,8 @@ namespace Microsoft.MixedReality.Toolkit.SampleGazeData
 
         private void Start()
         {
+            markerPrefabs = QNAModelController.statMarkerPrefab;
+
             if (EyeTarget != null)
             {
                 EyeTarget.WhileLookingAtTarget.AddListener(OnLookAt);
@@ -52,6 +57,38 @@ namespace Microsoft.MixedReality.Toolkit.SampleGazeData
 
             // Initialize the draw texture
             InitializeDrawTexture();
+        }
+
+        public void SpawnMarkerAtPosition(int index, Vector3 worldPosition, Vector3 surfaceNormal)
+        {
+            if (markerPrefabs == null || markerPrefabs.Length == 0)
+            {
+                Debug.LogError("Marker Prefabs array is not assigned or is empty. Cannot spawn marker.");
+                return;
+            }
+
+            if (index < 0 || index >= markerPrefabs.Length)
+            {
+                Debug.LogError($"Invalid marker index: {index}. Index must be between 0 and {markerPrefabs.Length - 1}.");
+                return;
+            }
+
+            // The normal vector points directly outwards from the surface.
+            // Quaternion.LookRotation creates a rotation where the Z-axis of the marker points along the normal.
+            Quaternion spawnRotation = Quaternion.LookRotation(surfaceNormal);
+
+            GameObject prefabToSpawn = markerPrefabs[index];
+            if (prefabToSpawn != null)
+            {
+                // Instantiate the chosen prefab using the provided position and calculated rotation.
+                // If markerContainer is assigned, parent the new marker to it for a clean hierarchy.
+                Instantiate(prefabToSpawn, worldPosition, spawnRotation, markerContainer);
+                //Debug.Log($"Spawned marker '{prefabToSpawn.name}' at {worldPosition}.");
+            }
+            else
+            {
+                Debug.LogError($"Prefab at index {index} in markerPrefabs is null.");
+            }
         }
 
         private void InitializeDrawTexture()
@@ -103,12 +140,13 @@ namespace Microsoft.MixedReality.Toolkit.SampleGazeData
             }
         }
 
-        public void ToggleLiveHeatmap(bool val) 
+        public void ToggleLiveHeatmap(bool val)
         {
             if (val)
             {
                 EyeTarget.WhileLookingAtTarget.AddListener(OnLookAt);
-            } else
+            }
+            else
             {
                 EyeTarget.WhileLookingAtTarget.RemoveListener(OnLookAt);
             }
@@ -133,33 +171,23 @@ namespace Microsoft.MixedReality.Toolkit.SampleGazeData
                 RaycastHit hit;
                 if (UnityEngine.Physics.Raycast(ray, out hit) && hit.collider.gameObject == gameObject)
                 {
-                    //Debug.Log("Raycast hit at world position: " + hit.point);
-
                     MeshCollider meshCollider = hit.collider as MeshCollider;
                     if (meshCollider != null && meshCollider.sharedMesh != null)
                     {
                         Vector2[] meshUVs = meshCollider.sharedMesh.uv;
                         if (meshUVs != null && meshUVs.Length > 0)
                         {
-                            //Debug.Log("First UV coordinate in mesh: " + meshUVs[0]);
                         }
 
                         Vector2 hitUV = hit.textureCoord;
-                        //Debug.Log("Hit UV from MeshCollider: " + hitUV);
                         StartCoroutine(DrawAt(hitUV));
                     }
                     else
                     {
-                        //Debug.Log("MeshCollider not found or missing sharedMesh");
                         Vector2? hitPosUV = GetCursorPosInTexture(hitPosition);
                         if (hitPosUV != null)
                         {
-                            //Debug.Log("Fallback UV: " + hitPosUV);
                             StartCoroutine(DrawAt(hitPosUV.Value));
-                        }
-                        else
-                        {
-                            //Debug.Log("Could not compute UV coordinates using fallback.");
                         }
                     }
                 }
@@ -169,7 +197,6 @@ namespace Microsoft.MixedReality.Toolkit.SampleGazeData
                 Vector2? hitPosUV = GetCursorPosInTexture(hitPosition);
                 if (hitPosUV != null)
                 {
-                    //Debug.Log("Hit UV: " + hitPosUV);
                     StartCoroutine(DrawAt(hitPosUV.Value));
                 }
             }
@@ -179,7 +206,6 @@ namespace Microsoft.MixedReality.Toolkit.SampleGazeData
         {
             if (myDrawTex != null)
             {
-                //Debug.Log("Clearing");
                 Color clearColor = new Color(0, 0, 0, 0);
                 for (int x = 0; x < myDrawTex.width; x++)
                 {
@@ -194,8 +220,6 @@ namespace Microsoft.MixedReality.Toolkit.SampleGazeData
         }
 
         bool neverDrawnOn = true;
-        Vector2 prevPos = new Vector2(-1, -1);
-        //float dynamicRadius = 0;
 
         private IEnumerator DrawAt(Vector2 posUV)
         {
@@ -272,7 +296,6 @@ namespace Microsoft.MixedReality.Toolkit.SampleGazeData
         private bool ComputeHeatmapColorAt(Vector2 currPnt, Vector2 origPivot, out Color? col)
         {
             col = null;
-
             float spread = drawBrushSize;
             float amplitude = drawIntensity;
             float distCenterToCurrPnt = Vector2.Distance(origPivot, currPnt) / spread;
@@ -296,7 +319,6 @@ namespace Microsoft.MixedReality.Toolkit.SampleGazeData
                 col = Color.blue;
                 col = new Color(col.Value.r, col.Value.g, col.Value.b, normalizedInterest);
             }
-
             return true;
         }
 
@@ -327,25 +349,21 @@ namespace Microsoft.MixedReality.Toolkit.SampleGazeData
         private Vector2? GetCursorPosInTexture(Vector3 hitPosition)
         {
             Vector2? hitPointUV = null;
-
             try
             {
                 Vector3 center = gameObject.transform.position;
                 Vector3 halfsize = gameObject.transform.localScale / 2;
-
                 Vector3 transfHitPnt = hitPosition - center;
                 transfHitPnt = Quaternion.AngleAxis(-(this.gameObject.transform.rotation.eulerAngles.y - 180), Vector3.up) * transfHitPnt;
                 transfHitPnt = Quaternion.AngleAxis(this.gameObject.transform.rotation.eulerAngles.x, Vector3.right) * transfHitPnt;
-
                 float uvx = (Mathf.Clamp(transfHitPnt.x, -halfsize.x, halfsize.x) + halfsize.x) / (2 * halfsize.x);
-                float uvy = (Mathf.Clamp(transfHitPnt.y, -halfsize.y, halfsize.y) + halfsize.y) / (2 * halfsize.y);
+                float uvy = (Mathf.Clamp(transfHitPnt.y, -halfsize.y, halfsize.y) / (2 * halfsize.y));
                 hitPointUV = new Vector2(uvx, uvy);
             }
             catch (UnityEngine.Assertions.AssertionException)
             {
                 Debug.LogError(">> AssertionException");
             }
-
             return hitPointUV;
         }
     }

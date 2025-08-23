@@ -48,6 +48,12 @@ public class QNAModelController : MonoBehaviour
     private GameObject popupInstance;
     private bool isAskingLanguage = false;
 
+    [Header("Marker Spawning Settings")]
+    [Tooltip("An array of 3D marker prefabs to be spawned. Assign your marker objects here in the Inspector.")]
+    [SerializeField]
+    public GameObject[] markerPrefabs;
+    static public GameObject[] statMarkerPrefab;
+
     private List<GameObject> models = new List<GameObject>();
     private int currentModelIndex = 0;
     private Vector3 previousModelPosition = Vector3.zero;
@@ -75,6 +81,8 @@ public class QNAModelController : MonoBehaviour
         qnaPrompt = QNAPrompt;
         audioSource = GetComponent<AudioSource>();
         audioSource.loop = true;
+
+        statMarkerPrefab = markerPrefabs;
     }
 
     void Start()

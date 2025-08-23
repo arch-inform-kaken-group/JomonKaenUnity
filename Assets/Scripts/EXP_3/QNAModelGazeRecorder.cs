@@ -86,6 +86,8 @@ public class QNAModelGazeRecorder : MonoBehaviour
     private Bounds localBounds;
     private StringBuilder pc_sb = new StringBuilder();
     private Vector3 localHitPosition;
+    private Vector3 globalHitPosition = Vector3.zero;
+    private Vector3 hitNormal = Vector3.zero;
 
     // Control flow flags
     private bool savedGaze;
@@ -103,8 +105,8 @@ public class QNAModelGazeRecorder : MonoBehaviour
 
     // Audio recording prompt variables
     private Vector3 promptInitialPosition;
-    //private string question = "「この土器/土偶の全体的あるいは部分的な印象をなるべく具体的な言葉を使って45秒以内で話してください」";
-    private string question = "Please speak your overall or partial impression of this pottery/clay figurine in 45 seconds or less using as specific words as possible.";
+    private string question = "「この土器/土偶の全体的あるいは部分的な印象をなるべく具体的な言葉を使って45秒以内で話してください」";
+    //private string question = "Please speak your overall or partial impression of this pottery/clay figurine in 45 seconds or less using as specific words as possible.";
     private float rotationSpeed = 5f;
     private float rotationThresholdDegrees = 1.0f;
     private float followDistance = 1.5f;
@@ -117,22 +119,22 @@ public class QNAModelGazeRecorder : MonoBehaviour
     private Vector3 targetPosition; // The position we are trying to achieve
 
     // QNA variables
-    //private string[] answerChoices = new string[]
-    //{
-    //    "面白い・気になる形だ",
-    //    "不思議・意味不明",
-    //    "何も感じない",
-    //    "不気味・不安・怖い",
-    //    "美しい・芸術的だ",
-    //};
     private string[] answerChoices = new string[]
     {
-        "Interesting and attentional shape",
-        "Strange and incomprehensible",
-        "Feel nothing",
-        "Creepy / unsettling / scary",
-        "Beautiful and artistic",
+        "面白い・気になる形だ",
+        "美しい・芸術的だ",
+        "不思議・意味不明",
+        "不気味・不安・怖い",
+        "何も感じない",
     };
+    //private string[] answerChoices = new string[]
+    //{
+    //    "Interesting and attentional shape",
+    //    "Beautiful and artistic",
+    //    "Strange and incomprehensible",
+    //    "Creepy / unsettling / scary",
+    //    "Feel nothing",
+    //};
     private bool isPlayingAudio = false;
     private float audioTimer = 1.0f;
 
@@ -325,6 +327,9 @@ public class QNAModelGazeRecorder : MonoBehaviour
         /* CHECK IF GAZE HIT ON SELECTED MODEL */
         if (target != null && target.name == currentSession.selectedObjectName)
         {
+            globalHitPosition = gaze.hitPosition;
+            hitNormal = gaze.eyeDirection;
+
             /* CONVERT GAZE HIT FROM WORLD COORDINATE TO LOCAL COORDINATE */
             gaze.localHitPosition = target.transform.InverseTransformPoint(gaze.hitPosition);
             Vector3 pos = gaze.localHitPosition;
@@ -554,23 +559,23 @@ public class QNAModelGazeRecorder : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Alpha4) || Input.GetKey(KeyCode.Keypad4))
         {
-            SelectAnswerByNumber(1);
+            SelectAnswerByNumber(0);
         }
         else if (Input.GetKey(KeyCode.Alpha6) || Input.GetKey(KeyCode.Keypad6))
         {
-            SelectAnswerByNumber(2);
+            SelectAnswerByNumber(1);
         }
         else if (Input.GetKey(KeyCode.Alpha8) || Input.GetKey(KeyCode.Keypad8))
         {
-            SelectAnswerByNumber(3);
+            SelectAnswerByNumber(2);
         }
         else if (Input.GetKey(KeyCode.Alpha2) || Input.GetKey(KeyCode.Keypad2))
         {
-            SelectAnswerByNumber(4);
+            SelectAnswerByNumber(3);
         }
         else if (Input.GetKey(KeyCode.Alpha5) || Input.GetKey(KeyCode.Keypad5))
         {
-            SelectAnswerByNumber(5);
+            SelectAnswerByNumber(4);
         }
         else
         {
@@ -593,7 +598,7 @@ public class QNAModelGazeRecorder : MonoBehaviour
 
     private void SelectAnswerByNumber(int number)
     {
-        if (number > 0 && number <= answerChoices.Length)
+        if (number >= 0 && number < answerChoices.Length)
         {
             if (!isPlayingAudio)
             {
@@ -610,7 +615,11 @@ public class QNAModelGazeRecorder : MonoBehaviour
                     audioTimer = 1.0f;
                 }
             }
-            OnQuestionnaireAnswered(answerChoices[number - 1]);
+            OnQuestionnaireAnswered(answerChoices[number]);
+            if (gameObject.GetComponent<DrawOn3DTexture>().enabled == true)
+            {
+                gameObject.GetComponent<DrawOn3DTexture>().SpawnMarkerAtPosition(number, globalHitPosition, hitNormal);
+            }
         }
         else
         {
@@ -645,6 +654,15 @@ public class QNAModelGazeRecorder : MonoBehaviour
     #endregion
 }
 #endregion
+
+//private string[] answerChoices = new string[]
+//    {
+//        "面白い・気になる形だ",
+//        "不思議・意味不明",
+//        "何も感じない",
+//        "不気味・不安・怖い",
+//        "美しい・芸術的だ",
+//    };
 
 #region Version 1 | LU HOU YANG
 //using System;
