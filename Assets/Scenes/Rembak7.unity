@@ -16281,7 +16281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HeatmapLookUpTable: {fileID: 2800000, guid: 0a82eb85d452c69468f035b9786f2abf, type: 2}
-  drawBrushSize: 200
+  drawBrushSize: 500
   drawIntensity: 50
   minThreshDeltaHeatMap: 0.001
   useRaycastForUV: 1
