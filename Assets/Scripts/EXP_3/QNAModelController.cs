@@ -104,7 +104,7 @@ public class QNAModelController : MonoBehaviour
             }
         }
 
-        DisableAllLiveHeatmap();
+        //DisableAllLiveHeatmap();
 
         promptObject.SetActive(false);
         qnaPrompt.SetActive(true);
