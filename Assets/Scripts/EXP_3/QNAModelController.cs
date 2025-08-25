@@ -138,7 +138,7 @@ public class QNAModelController : MonoBehaviour
             } 
             else if (Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKey(KeyCode.Keypad5))
             {
-                OnQuestionnaireAnswered("MALAY");
+                OnQuestionnaireAnswered("JAPANESE");
             }
             else if (Input.GetKeyDown(KeyCode.Alpha6) || Input.GetKey(KeyCode.Keypad6))
             {

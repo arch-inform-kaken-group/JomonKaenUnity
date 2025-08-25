@@ -148,8 +148,8 @@ public class QNAModelGazeRecorder : MonoBehaviour
 
         promptObject.SetActive(true);
         promptInitialPosition = promptObject.transform.localPosition;
-        //promptObject.GetComponent<TextMeshPro>().SetText("「Enter」キーを押してください");
-        promptObject.GetComponent<TextMeshPro>().SetText("Press 'ENTER'");
+        promptObject.GetComponent<TextMeshPro>().SetText("「Enter」キーを押してください");
+        //promptObject.GetComponent<TextMeshPro>().SetText("Press 'ENTER'");
 
         // audio prompt
         if (objectWithCollider == null)
@@ -470,8 +470,8 @@ public class QNAModelGazeRecorder : MonoBehaviour
             SetIsRecording(false);
         }
         currentSession = new QNAModelGazeRecorder.SessionData();
-        //promptObject.GetComponent<TextMeshPro>().SetText("「Enter」キーを押してください");
-        promptObject.GetComponent<TextMeshPro>().SetText("Press 'ENTER'");
+        promptObject.GetComponent<TextMeshPro>().SetText("「Enter」キーを押してください");
+        //promptObject.GetComponent<TextMeshPro>().SetText("Press 'ENTER'");
 
         if (heatmapSource != null)
         {
