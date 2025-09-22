@@ -70,7 +70,7 @@ public class QNAModelGazeRecorder : MonoBehaviour
     public MeshFilter meshFilter;
 
     // Experiment duration control
-    private float recordGazeDuration = 60.0f;
+    private float recordGazeDuration = 150.0f;
     private float recordVoiceDuration = 45.0f;
 
     // Recording state and data
@@ -119,13 +119,12 @@ public class QNAModelGazeRecorder : MonoBehaviour
     private Vector3 targetPosition; // The position we are trying to achieve
 
     // QNA variables
-    private string[] answerChoices = new string[]
-    {
-        "面白い・気になる形だ",
-        "美しい・芸術的だ",
-        "不思議・意味不明",
-        "不気味・不安・怖い",
-        "何も感じない",
+    private Dictionary<string, string> answerChoices = new Dictionary<string, string> {
+        {"4", "面白い・気になる形だ" },
+        {"6", "美しい・芸術的だ" },
+        {"8", "不思議・意味不明" },
+        {"2", "不気味・不安・怖い" },
+        {"5", "何も感じない" },
     };
     //private string[] answerChoices = new string[]
     //{
@@ -484,7 +483,7 @@ public class QNAModelGazeRecorder : MonoBehaviour
     public void SaveAllData()
     {
         ExportPointCloud(QNAModelController.currentModel);
-        Export3DModel(QNAModelController.currentModel);
+        //Export3DModel(QNAModelController.currentModel);
         SaveQuestionnaireAnswers(); // Save the answers
         Debug.Log("SAVED DATA AT: " + saveDir);
     }
@@ -559,23 +558,23 @@ public class QNAModelGazeRecorder : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Alpha4) || Input.GetKey(KeyCode.Keypad4))
         {
-            SelectAnswerByNumber(0);
+            SelectAnswerByNumber("4");
         }
         else if (Input.GetKey(KeyCode.Alpha6) || Input.GetKey(KeyCode.Keypad6))
         {
-            SelectAnswerByNumber(1);
+            SelectAnswerByNumber("6");
         }
         else if (Input.GetKey(KeyCode.Alpha8) || Input.GetKey(KeyCode.Keypad8))
         {
-            SelectAnswerByNumber(2);
+            SelectAnswerByNumber("8");
         }
         else if (Input.GetKey(KeyCode.Alpha2) || Input.GetKey(KeyCode.Keypad2))
         {
-            SelectAnswerByNumber(3);
+            SelectAnswerByNumber("2");
         }
         else if (Input.GetKey(KeyCode.Alpha5) || Input.GetKey(KeyCode.Keypad5))
         {
-            SelectAnswerByNumber(4);
+            SelectAnswerByNumber("5");
         }
         else
         {
@@ -596,9 +595,9 @@ public class QNAModelGazeRecorder : MonoBehaviour
         }
     }
 
-    private void SelectAnswerByNumber(int number)
+    private void SelectAnswerByNumber(string key)
     {
-        if (number >= 0 && number < answerChoices.Length)
+        if (answerChoices.ContainsKey(key))
         {
             if (!isPlayingAudio)
             {
@@ -615,15 +614,15 @@ public class QNAModelGazeRecorder : MonoBehaviour
                     audioTimer = 1.0f;
                 }
             }
-            OnQuestionnaireAnswered(answerChoices[number]);
+            OnQuestionnaireAnswered(answerChoices[key]);
             if (gameObject.GetComponent<DrawOn3DTexture>().enabled == true)
             {
-                gameObject.GetComponent<DrawOn3DTexture>().SpawnMarkerAtPosition(number, globalHitPosition, hitNormal);
+                gameObject.GetComponent<DrawOn3DTexture>().SpawnMarkerAtPosition(key, globalHitPosition, hitNormal);
             }
         }
         else
         {
-            Debug.LogWarning($"Attempted to select an invalid answer number: {number}");
+            Debug.LogWarning($"Attempted to select an invalid answer number: {key}");
         }
     }
 

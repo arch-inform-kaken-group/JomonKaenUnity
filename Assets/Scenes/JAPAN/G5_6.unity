@@ -14678,7 +14678,7 @@ MonoBehaviour:
   adminOffUI: {fileID: 1197695588}
   startButton: {fileID: 856720579}
   QNAPrompt: {fileID: 1828955808}
-  languageQNA: {fileID: 0}
+  languageQNA: {fileID: 3003334015865490606, guid: 4e9368f3d7f4c974c899deddbf882c69, type: 3}
   markerPrefabs:
   - {fileID: 5633361458767155208, guid: 10c731fb00554054a8b5ade1d449f614, type: 3}
   - {fileID: 5565538857692257015, guid: 43504c48a138b4c4b8ceb699f934c03b, type: 3}

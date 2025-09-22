@@ -26,6 +26,15 @@ namespace Microsoft.MixedReality.Toolkit.SampleGazeData
 
         private GameObject[] markerPrefabs;
         private Transform markerContainer;
+        private List<GameObject> spawnedMarkers = new List<GameObject>();
+
+        private Dictionary<string, int> answerChoices = new Dictionary<string, int> {
+            {"4", 0 },
+            {"6", 1 },
+            {"8", 2 },
+            {"2", 3 },
+            {"5", 4 },
+        };
 
         public bool UseLiveInputStream = true;
         public Material HeatmapOverlayMaterialTemplate;
@@ -59,7 +68,7 @@ namespace Microsoft.MixedReality.Toolkit.SampleGazeData
             InitializeDrawTexture();
         }
 
-        public void SpawnMarkerAtPosition(int index, Vector3 worldPosition, Vector3 surfaceNormal)
+        public void SpawnMarkerAtPosition(string key, Vector3 worldPosition, Vector3 surfaceNormal)
         {
             if (markerPrefabs == null || markerPrefabs.Length == 0)
             {
@@ -67,9 +76,9 @@ namespace Microsoft.MixedReality.Toolkit.SampleGazeData
                 return;
             }
 
-            if (index < 0 || index >= markerPrefabs.Length)
+            if (!answerChoices.ContainsKey(key))
             {
-                Debug.LogError($"Invalid marker index: {index}. Index must be between 0 and {markerPrefabs.Length - 1}.");
+                Debug.LogError($"Invalid marker key: {key}.");
                 return;
             }
 
@@ -77,17 +86,21 @@ namespace Microsoft.MixedReality.Toolkit.SampleGazeData
             // Quaternion.LookRotation creates a rotation where the Z-axis of the marker points along the normal.
             Quaternion spawnRotation = Quaternion.LookRotation(surfaceNormal);
 
-            GameObject prefabToSpawn = markerPrefabs[index];
+            GameObject prefabToSpawn = markerPrefabs[answerChoices[key]];
             if (prefabToSpawn != null)
             {
                 // Instantiate the chosen prefab using the provided position and calculated rotation.
                 // If markerContainer is assigned, parent the new marker to it for a clean hierarchy.
-                Instantiate(prefabToSpawn, worldPosition, spawnRotation, markerContainer);
+                // Instantiate the marker and store its reference in a variable.
+                GameObject newMarker = Instantiate(prefabToSpawn, worldPosition, spawnRotation, markerContainer);
+
+                // Add the newly created marker to our list for tracking.
+                spawnedMarkers.Add(newMarker);
                 //Debug.Log($"Spawned marker '{prefabToSpawn.name}' at {worldPosition}.");
             }
             else
             {
-                Debug.LogError($"Prefab at index {index} in markerPrefabs is null.");
+                Debug.LogError($"Prefab at index {answerChoices[key]} in markerPrefabs is null.");
             }
         }
 
@@ -204,6 +217,14 @@ namespace Microsoft.MixedReality.Toolkit.SampleGazeData
 
         public void ClearDrawing()
         {
+            // Loop through all tracked markers and destroy them.
+            foreach (GameObject marker in spawnedMarkers)
+            {
+                Destroy(marker);
+            }
+            // Clear the list to remove all the now-destroyed marker references.
+            spawnedMarkers.Clear();
+
             if (myDrawTex != null)
             {
                 Color clearColor = new Color(0, 0, 0, 0);

@@ -45,11 +45,13 @@ public class QNAModelController : MonoBehaviour
     [SerializeField] private static GameObject qnaPrompt;
 
     [SerializeField] private GameObject languageQNA;
+    [SerializeField] private bool askLanguage = false;
     private GameObject popupInstance;
     private bool isAskingLanguage = false;
 
     [Header("Marker Spawning Settings")]
     [Tooltip("An array of 3D marker prefabs to be spawned. Assign your marker objects here in the Inspector.")]
+    [SerializeField] private bool enableLiveHeatmapOnStart = false;
     [SerializeField]
     public GameObject[] markerPrefabs;
     static public GameObject[] statMarkerPrefab;
@@ -100,11 +102,11 @@ public class QNAModelController : MonoBehaviour
                     models[j].GetComponent<QNAModelGazeRecorder>().sessionPath = sessionPath;
                     models[j].GetComponent<EyeTrackingTarget>().enabled = false;
                     models[j].SetActive(false);
-                }                
+                }
             }
         }
 
-        DisableAllLiveHeatmap();
+        if (!enableLiveHeatmapOnStart) { DisableAllLiveHeatmap(); } 
 
         promptObject.SetActive(false);
         qnaPrompt.SetActive(true);
@@ -120,7 +122,7 @@ public class QNAModelController : MonoBehaviour
 
         LoadModel();
 
-        ShowQuestionnaire();
+        if (askLanguage) { ShowQuestionnaire(); } 
     }
 
     void Update()
@@ -198,6 +200,7 @@ public class QNAModelController : MonoBehaviour
             currentModel.GetComponent<QNAModelGazeRecorder>().SetIsRecording(false);
             currentModel.GetComponent<QNAModelGazeRecorder>().SaveAllData();
             currentModel.GetComponent<EyeTrackingTarget>().enabled = false;
+            currentModel.GetComponent<DrawOn3DTexture>().ClearDrawing();
         }
     }
 
@@ -308,10 +311,10 @@ public class QNAModelController : MonoBehaviour
         if (popupInstance != null)
         {
             Destroy(popupInstance.gameObject);
-            ShowQuestionnaire();
+            if (askLanguage) { ShowQuestionnaire(); }
         } else
         {
-            ShowQuestionnaire();
+            if (askLanguage) { ShowQuestionnaire(); }
         }
     }
 
