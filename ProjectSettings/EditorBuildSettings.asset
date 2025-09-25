@@ -53,6 +53,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/JAPAN/G5_6.unity
     guid: 5a37c25873d461c48853c1783580731e
+  - enabled: 0
+    path: Assets/Scenes/JAPAN/G15_16.unity
+    guid: 87d980e8fcd53d548b3695c060cf9b34
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 2181b6a44f6f55c43b1e38148db2a852, type: 2}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 234f8d7f01eaa3f40bc9dd86d60390ce, type: 2}

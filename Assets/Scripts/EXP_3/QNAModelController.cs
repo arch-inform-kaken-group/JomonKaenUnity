@@ -200,7 +200,6 @@ public class QNAModelController : MonoBehaviour
             currentModel.GetComponent<QNAModelGazeRecorder>().SetIsRecording(false);
             currentModel.GetComponent<QNAModelGazeRecorder>().SaveAllData();
             currentModel.GetComponent<EyeTrackingTarget>().enabled = false;
-            currentModel.GetComponent<DrawOn3DTexture>().ClearDrawing();
         }
     }
 
@@ -214,6 +213,7 @@ public class QNAModelController : MonoBehaviour
         {
             currentModel.transform.parent.SetPositionAndRotation(previousModelPosition, new Quaternion());
             StopRecording();
+            currentModel.GetComponent<DrawOn3DTexture>().ClearDrawing();
             currentModel.SetActive(false);
         }
 
