@@ -61,7 +61,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.0025, y: 0.0025, z: 0.0025}
+  m_LocalScale: {x: 0.075, y: 0.075, z: 0.075}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7420921194881428542}
@@ -79,11 +79,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c523107adbf4a9b8ca63b83f2f89aba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfaceCursorDistance: 0.02
+  surfaceCursorDistance: 0
   useUnscaledTime: 1
-  positionLerpTime: 0.01
-  scaleLerpTime: 0.01
-  rotationLerpTime: 0.01
+  positionLerpTime: 0
+  scaleLerpTime: 0
+  rotationLerpTime: 0
   lookRotationBlend: 0
   resizeCursorWithDistance: 1
   cursorAngularSize: 0.7
@@ -181,7 +181,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f0717664542a54149b20920c689b1f6a, type: 2}
+  - {fileID: 2100000, guid: 1b99e5ea5d7542d4081f7a2a8e046c98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

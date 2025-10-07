@@ -70,7 +70,7 @@ public class QNAModelGazeRecorder : MonoBehaviour
     public MeshFilter meshFilter;
 
     // Experiment duration control
-    private float recordGazeDuration = 150.0f;
+    private float recordGazeDuration = 60.0f;
     private float recordVoiceDuration = 45.0f;
 
     // Recording state and data
@@ -105,10 +105,10 @@ public class QNAModelGazeRecorder : MonoBehaviour
 
     // Audio recording prompt variables
     private Vector3 promptInitialPosition;
-    private string question = "「この土器/土偶の全体的あるいは部分的な印象をなるべく具体的な言葉を使って45秒以内で話してください」";
-    //private string question = "Please speak your overall or partial impression of this pottery/clay figurine in 45 seconds or less using as specific words as possible.";
-    private string enterText = "「Enter」キーを押してください";
-    //private string enterText = "Press 'ENTER'";
+    //private string question = "「この土器/土偶の全体的あるいは部分的な印象をなるべく具体的な言葉を使って45秒以内で話してください」";
+    private string question = "Please speak your overall or partial impression of this pottery/clay figurine in 45 seconds or less using as specific words as possible.";
+    //private string enterText = "「Enter」キーを押してください";
+    private string enterText = "Press 'ENTER'";
     private float rotationSpeed = 5f;
     private float rotationThresholdDegrees = 1.0f;
     private float followDistance = 1.5f;
