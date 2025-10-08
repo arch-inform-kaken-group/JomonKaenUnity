@@ -43,5 +43,18 @@ public class ButtonUI : MonoBehaviour
     public void toggleIsPressed()
     {
         isPressed = !isPressed;
+        if (hasState)
+        {
+            if (isPressed)
+            {
+                onButton.SetActive(true);
+                offButton.SetActive(false);
+            }
+            else
+            {
+                onButton.SetActive(false);
+                offButton.SetActive(true);
+            }
+        }
     }
 }

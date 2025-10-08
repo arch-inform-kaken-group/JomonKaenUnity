@@ -28,6 +28,10 @@ namespace Microsoft.MixedReality.Toolkit.SampleGazeData
         private Transform markerContainer;
         private List<GameObject> spawnedMarkers = new List<GameObject>();
 
+        public bool showMarkers = false;
+        private int markerCounter = 0;
+        public bool showHeatmap = true;
+
         private Dictionary<string, int> answerChoices = new Dictionary<string, int> {
             {"4", 0 },
             {"6", 1 },
@@ -70,6 +74,8 @@ namespace Microsoft.MixedReality.Toolkit.SampleGazeData
 
         public void SpawnMarkerAtPosition(string key, Vector3 worldPosition, Vector3 surfaceNormal)
         {
+            if (!showMarkers) { return; }
+
             if (markerPrefabs == null || markerPrefabs.Length == 0)
             {
                 Debug.LogError("Marker Prefabs array is not assigned or is empty. Cannot spawn marker.");
@@ -167,6 +173,8 @@ namespace Microsoft.MixedReality.Toolkit.SampleGazeData
 
         public void DrawAtThisHitPos(Vector3 hitPosition)
         {
+            if (!showHeatmap) { return; }
+
             if (useRaycastForUV)
             {
                 Ray ray;
@@ -184,6 +192,16 @@ namespace Microsoft.MixedReality.Toolkit.SampleGazeData
                 RaycastHit hit;
                 if (UnityEngine.Physics.Raycast(ray, out hit) && hit.collider.gameObject == gameObject)
                 {
+                    if (markerCounter % 4 == 0)
+                    {
+                        GameObject newMarker = Instantiate(QNAModelController.statMarkerGaze, hitPosition, new Quaternion(0f, 0f, 0f, 0f), markerContainer);
+                        spawnedMarkers.Add(newMarker);
+                        markerCounter = 1;
+                    } else
+                    {
+                        markerCounter++;
+                    }
+
                     MeshCollider meshCollider = hit.collider as MeshCollider;
                     if (meshCollider != null && meshCollider.sharedMesh != null)
                     {

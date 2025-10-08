@@ -41,6 +41,8 @@ public class QNAModelController : MonoBehaviour
     [SerializeField] private GameObject adminOffUI;
 
     [SerializeField] private GameObject startButton;
+    [SerializeField] private GameObject showMarkerButton;
+    [SerializeField] private GameObject showHeatmapButton;
     [SerializeField] private GameObject QNAPrompt;
     [SerializeField] private static GameObject qnaPrompt;
 
@@ -55,6 +57,10 @@ public class QNAModelController : MonoBehaviour
     [SerializeField]
     public GameObject[] markerPrefabs;
     static public GameObject[] statMarkerPrefab;
+
+    [SerializeField]
+    public GameObject markerGaze;
+    static public GameObject statMarkerGaze;
 
     private List<GameObject> models = new List<GameObject>();
     private int currentModelIndex = 0;
@@ -85,6 +91,7 @@ public class QNAModelController : MonoBehaviour
         audioSource.loop = true;
 
         statMarkerPrefab = markerPrefabs;
+        statMarkerGaze = markerGaze; ;
     }
 
     void Start()
@@ -349,6 +356,37 @@ public class QNAModelController : MonoBehaviour
                 m[j].GetComponent<DrawOn3DTexture>().enabled = true;
             }
         }
+    }
+
+    public void ToggleShowMarker()
+    {
+        for (int i = 0; i < groups.Count; i++)
+        {
+            List<GameObject> m = groups[i].GetComponent<GroupItems>().GetModels();
+            for (int j = 0; j < m.Count(); j++)
+            {
+                m[j].GetComponent<DrawOn3DTexture>().showMarkers = !m[j].GetComponent<DrawOn3DTexture>().showMarkers;
+                
+            }
+        }
+
+        showMarkerButton.GetComponent<ButtonUI>().toggleIsPressed();
+    }
+
+    public void ToggleShowHeatmap()
+    {
+        for (int i = 0; i < groups.Count; i++)
+        {
+            List<GameObject> m = groups[i].GetComponent<GroupItems>().GetModels();
+            for (int j = 0; j < m.Count(); j++)
+            {
+                m[j].GetComponent<DrawOn3DTexture>().showHeatmap = !m[j].GetComponent<DrawOn3DTexture>().showHeatmap;
+
+
+            }
+        }
+
+        showHeatmapButton.GetComponent<ButtonUI>().toggleIsPressed();
     }
 
     public void ToggleAdminMode()
