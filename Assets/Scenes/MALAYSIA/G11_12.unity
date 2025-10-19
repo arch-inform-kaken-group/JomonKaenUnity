@@ -1782,6 +1782,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 423589239}
+  - {fileID: 1842766422}
+  - {fileID: 2047365707}
   - {fileID: 741630189}
   - {fileID: 59786608}
   - {fileID: 1558043671}
@@ -2854,6 +2856,8 @@ MonoBehaviour:
   drawIntensity: 50
   minThreshDeltaHeatMap: 0.001
   useRaycastForUV: 1
+  showMarkers: 0
+  showHeatmap: 1
   UseLiveInputStream: 1
   HeatmapOverlayMaterialTemplate: {fileID: 2100000, guid: 7b106f5a808c9734aa4fc925fb67ca07, type: 2}
 --- !u!114 &312563297
@@ -3721,6 +3725,8 @@ MonoBehaviour:
   drawIntensity: 50
   minThreshDeltaHeatMap: 0.001
   useRaycastForUV: 1
+  showMarkers: 0
+  showHeatmap: 1
   UseLiveInputStream: 1
   HeatmapOverlayMaterialTemplate: {fileID: 2100000, guid: 7b106f5a808c9734aa4fc925fb67ca07, type: 2}
 --- !u!114 &425250315
@@ -3911,6 +3917,8 @@ MonoBehaviour:
   drawIntensity: 50
   minThreshDeltaHeatMap: 0.001
   useRaycastForUV: 1
+  showMarkers: 0
+  showHeatmap: 1
   UseLiveInputStream: 1
   HeatmapOverlayMaterialTemplate: {fileID: 2100000, guid: 7b106f5a808c9734aa4fc925fb67ca07, type: 2}
 --- !u!114 &435785154
@@ -4427,6 +4435,8 @@ MonoBehaviour:
   drawIntensity: 50
   minThreshDeltaHeatMap: 0.001
   useRaycastForUV: 1
+  showMarkers: 0
+  showHeatmap: 1
   UseLiveInputStream: 1
   HeatmapOverlayMaterialTemplate: {fileID: 2100000, guid: 7b106f5a808c9734aa4fc925fb67ca07, type: 2}
 --- !u!114 &473319770
@@ -6024,6 +6034,8 @@ MonoBehaviour:
   drawIntensity: 50
   minThreshDeltaHeatMap: 0.001
   useRaycastForUV: 1
+  showMarkers: 0
+  showHeatmap: 1
   UseLiveInputStream: 1
   HeatmapOverlayMaterialTemplate: {fileID: 2100000, guid: 7b106f5a808c9734aa4fc925fb67ca07, type: 2}
 --- !u!114 &673435210
@@ -7091,6 +7103,8 @@ MonoBehaviour:
   drawIntensity: 50
   minThreshDeltaHeatMap: 0.001
   useRaycastForUV: 1
+  showMarkers: 0
+  showHeatmap: 1
   UseLiveInputStream: 1
   HeatmapOverlayMaterialTemplate: {fileID: 2100000, guid: 7b106f5a808c9734aa4fc925fb67ca07, type: 2}
 --- !u!114 &746683378
@@ -7584,6 +7598,8 @@ MonoBehaviour:
   drawIntensity: 50
   minThreshDeltaHeatMap: 0.001
   useRaycastForUV: 1
+  showMarkers: 0
+  showHeatmap: 1
   UseLiveInputStream: 1
   HeatmapOverlayMaterialTemplate: {fileID: 2100000, guid: 7b106f5a808c9734aa4fc925fb67ca07, type: 2}
 --- !u!114 &787190828
@@ -10093,6 +10109,8 @@ MonoBehaviour:
   drawIntensity: 50
   minThreshDeltaHeatMap: 0.001
   useRaycastForUV: 1
+  showMarkers: 0
+  showHeatmap: 1
   UseLiveInputStream: 1
   HeatmapOverlayMaterialTemplate: {fileID: 2100000, guid: 7b106f5a808c9734aa4fc925fb67ca07, type: 2}
 --- !u!114 &1004333766
@@ -10449,6 +10467,8 @@ MonoBehaviour:
   drawIntensity: 50
   minThreshDeltaHeatMap: 0.001
   useRaycastForUV: 1
+  showMarkers: 0
+  showHeatmap: 1
   UseLiveInputStream: 1
   HeatmapOverlayMaterialTemplate: {fileID: 2100000, guid: 7b106f5a808c9734aa4fc925fb67ca07, type: 2}
 --- !u!114 &1024843556
@@ -13396,6 +13416,8 @@ MonoBehaviour:
   drawIntensity: 50
   minThreshDeltaHeatMap: 0.001
   useRaycastForUV: 1
+  showMarkers: 0
+  showHeatmap: 1
   UseLiveInputStream: 1
   HeatmapOverlayMaterialTemplate: {fileID: 2100000, guid: 7b106f5a808c9734aa4fc925fb67ca07, type: 2}
 --- !u!114 &1348045163
@@ -13743,14 +13765,19 @@ MonoBehaviour:
   adminOnUI: {fileID: 1413207098}
   adminOffUI: {fileID: 1197695588}
   startButton: {fileID: 856720579}
+  showMarkerButton: {fileID: 1842766423}
+  showHeatmapButton: {fileID: 2047365708}
   QNAPrompt: {fileID: 1828955808}
   languageQNA: {fileID: 3003334015865490606, guid: 4e9368f3d7f4c974c899deddbf882c69, type: 3}
+  askLanguage: 0
+  enableLiveHeatmapOnStart: 0
   markerPrefabs:
   - {fileID: 5633361458767155208, guid: 10c731fb00554054a8b5ade1d449f614, type: 3}
   - {fileID: 5565538857692257015, guid: 43504c48a138b4c4b8ceb699f934c03b, type: 3}
   - {fileID: 8118896106304649388, guid: 9bf565296b5068843adce667b2d9c9bb, type: 3}
   - {fileID: 7055515552279567787, guid: a13e8c152bff8434ba41da3307e7a8d4, type: 3}
   - {fileID: 8742322480240662461, guid: ba9559ce70358894581a7ea011d2102c, type: 3}
+  markerGaze: {fileID: 397311734425827553, guid: 81716fa97bac49146ac0127b3d21c519, type: 3}
 --- !u!82 &1362956098
 AudioSource:
   m_ObjectHideFlags: 0
@@ -18025,6 +18052,100 @@ Transform:
   - {fileID: 1671033112}
   m_Father: {fileID: 747251801}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1842766421
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 239035387}
+    m_Modifications:
+    - target: {fileID: 2198307829825957012, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_text
+      value: Show Marker
+      objectReference: {fileID: 0}
+    - target: {fileID: 2198307829825957012, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2868724128458797634, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1362956097}
+    - target: {fileID: 2868724128458797634, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleShowMarker
+      objectReference: {fileID: 0}
+    - target: {fileID: 2868724128458797634, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: QNAModelController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7759628371480993293, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_Name
+      value: ShowMarker
+      objectReference: {fileID: 0}
+    - target: {fileID: 7937040127609048434, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: hasState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068114520459644466, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.5888002
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068114520459644466, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.252
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068114520459644466, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068114520459644466, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068114520459644466, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068114520459644466, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068114520459644466, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068114520459644466, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068114520459644466, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068114520459644466, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4170437667736258397, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+  m_SourcePrefab: {fileID: 100100000, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+--- !u!4 &1842766422 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9068114520459644466, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+  m_PrefabInstance: {fileID: 1842766421}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1842766423 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7759628371480993293, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+  m_PrefabInstance: {fileID: 1842766421}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1872082765
 GameObject:
   m_ObjectHideFlags: 0
@@ -19963,6 +20084,8 @@ MonoBehaviour:
   drawIntensity: 50
   minThreshDeltaHeatMap: 0.001
   useRaycastForUV: 1
+  showMarkers: 0
+  showHeatmap: 1
   UseLiveInputStream: 1
   HeatmapOverlayMaterialTemplate: {fileID: 2100000, guid: 7b106f5a808c9734aa4fc925fb67ca07, type: 2}
 --- !u!114 &2042660801
@@ -20111,6 +20234,104 @@ Transform:
   - {fileID: 474441294}
   m_Father: {fileID: 1455650987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &2047365706
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 239035387}
+    m_Modifications:
+    - target: {fileID: 2198307829825957012, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_text
+      value: Show Heatmap
+      objectReference: {fileID: 0}
+    - target: {fileID: 2198307829825957012, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2868724128458797634, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1362956097}
+    - target: {fileID: 2868724128458797634, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleShowHeatmap
+      objectReference: {fileID: 0}
+    - target: {fileID: 2868724128458797634, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: QNAModelController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7759628371480993293, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_Name
+      value: ShowHeatmap
+      objectReference: {fileID: 0}
+    - target: {fileID: 7937040127609048434, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: hasState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7937040127609048434, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: isPressed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068114520459644466, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.5888002
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068114520459644466, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.022
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068114520459644466, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068114520459644466, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068114520459644466, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068114520459644466, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068114520459644466, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068114520459644466, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068114520459644466, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068114520459644466, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4170437667736258397, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+  m_SourcePrefab: {fileID: 100100000, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+--- !u!4 &2047365707 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9068114520459644466, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+  m_PrefabInstance: {fileID: 2047365706}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2047365708 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7759628371480993293, guid: 3c4d2530cb5b43f44beaacaf068a2619, type: 3}
+  m_PrefabInstance: {fileID: 2047365706}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2059474703
 GameObject:
   m_ObjectHideFlags: 0
@@ -20419,6 +20640,8 @@ MonoBehaviour:
   drawIntensity: 50
   minThreshDeltaHeatMap: 0.001
   useRaycastForUV: 1
+  showMarkers: 0
+  showHeatmap: 1
   UseLiveInputStream: 1
   HeatmapOverlayMaterialTemplate: {fileID: 2100000, guid: 7b106f5a808c9734aa4fc925fb67ca07, type: 2}
 --- !u!114 &2075519172

@@ -30,7 +30,7 @@ namespace Microsoft.MixedReality.Toolkit.SampleGazeData
 
         public bool showMarkers = false;
         private int markerCounter = 0;
-        public bool showHeatmap = true;
+        public bool showHeatmap = false;
 
         private Dictionary<string, int> answerChoices = new Dictionary<string, int> {
             {"4", 0 },

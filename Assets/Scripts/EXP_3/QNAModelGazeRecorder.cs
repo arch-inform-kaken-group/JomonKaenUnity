@@ -483,7 +483,7 @@ public class QNAModelGazeRecorder : MonoBehaviour
     public void SaveAllData()
     {
         ExportPointCloud(QNAModelController.currentModel);
-        //Export3DModel(QNAModelController.currentModel);
+        Export3DModel(QNAModelController.currentModel);
         SaveQuestionnaireAnswers(); // Save the answers
         Debug.Log("SAVED DATA AT: " + saveDir);
     }
