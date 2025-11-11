@@ -27,18 +27,31 @@ public class ERCGazeRecorder : MonoBehaviour
     }
 
     [SerializeField]
-    private int numTarget = 80;
+    private int numTarget = 60;
+
+    [SerializeField]
+    private bool multipleTarget = true;
+
+    [SerializeField]
+    private bool is3DObject = true;
+
+    [SerializeField]
+    private int numTargetPerFace = 10;
+
+    private int currentFaceIndex = 0;
 
     [SerializeField]
     private List<GameObject> targetList = new List<GameObject>();
 
     [SerializeField]
-    private GameObject currentModel;
+    private List<int> targetFace3D = new List<int>();
+
+    private List<List<GameObject>> targetList3D = new List<List<GameObject>>();
 
     [SerializeField]
-    private GameObject button;
+    private GameObject currentModel;
 
-    private string sessionPath;
+    public string sessionPath;
     private int numTargetAppeared;
     private double timeInterval;
     private float zSum;
@@ -61,6 +74,23 @@ public class ERCGazeRecorder : MonoBehaviour
         {
             targetList[i].SetActive(false);
         }
+
+        if (is3DObject)
+        {
+            List<GameObject> targetsTemp = new List<GameObject>();
+            for (int i = 0; i < targetList.Count; i++)
+            {
+                if (targetFace3D.Contains(i))
+                {
+                    targetList3D.Add(targetsTemp);
+                    targetsTemp = new List<GameObject>();
+                } else
+                {
+                    targetsTemp.Add(targetList[i]);
+                }
+            }
+            targetList3D.Add(targetsTemp);
+        }
     }
 
     void Update()
@@ -74,26 +104,64 @@ public class ERCGazeRecorder : MonoBehaviour
 
         if (timeInterval < 0)
         {
-            if (numTargetAppeared == numTarget)
+            if (multipleTarget) 
             {
-                currentTarget.SetActive(false);
-                SetIsRecording(false);
-                SaveAllData();
-                button.SetActive(true);
+                if (numTargetAppeared == numTarget)
+                {
+                    currentTarget.SetActive(false);
+                    SetIsRecording(false);
+                    SaveAllData();
+
+                    ERCGazeController.ToggleRecorded();
+                }
+                else
+                {
+                    timeInterval = Range(100, 151) / 100.0;
+                    currentTarget.SetActive(false);
+                    
+                    if (is3DObject)
+                    {
+                        if (numTargetAppeared % numTargetPerFace == 0)
+                        {
+                            currentFaceIndex = (currentFaceIndex + 1) % targetList3D.Count;
+                            Debug.Log(currentFaceIndex);
+                        }
+
+                        int nextIndex = Range(0, targetList3D[currentFaceIndex].Count);
+                        while (currentIndex == nextIndex)
+                        {
+                            nextIndex = Range(0, targetList3D[currentFaceIndex].Count);
+                        }
+                        currentIndex = nextIndex;
+                        currentTarget = targetList3D[currentFaceIndex][currentIndex];
+                    } else
+                    {
+                        int nextIndex = Range(0, targetList.Count);
+                        while (currentIndex == nextIndex)
+                        {
+                            nextIndex = Range(0, targetList.Count);
+                        }
+                        currentIndex = nextIndex;
+                        currentTarget = targetList[currentIndex];
+                    }
+
+                    currentTarget.SetActive(true);
+                    numTargetAppeared++;
+                }
             } else
             {
-                timeInterval = Range(100, 151) / 100.0;
-                currentTarget.SetActive(false);
-                int nextIndex = Range(0, targetList.Count);
-                while (currentIndex == nextIndex)
+                if (numTargetAppeared == numTarget)
                 {
-                    nextIndex = Range(0, targetList.Count);
+                    SetIsRecording(false);
+                    SaveAllData();
+
+                    ERCGazeController.ToggleRecorded();
                 }
-                currentIndex = nextIndex;
-                currentTarget = targetList[currentIndex];
-                currentTarget.SetActive(true);
+
+                timeInterval = Range(100, 151) / 100.0;
                 numTargetAppeared++;
             }
+            
         } else
         {
             timeInterval -= Time.deltaTime;
@@ -107,7 +175,7 @@ public class ERCGazeRecorder : MonoBehaviour
 
         if (val && currentModel != null)
         {
-            sessionPath = DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss") + "_recalibration";
+            //sessionPath = DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss") + "_precision";
             numTargetAppeared = 1;
             timeInterval = Range(100, 151) / 100.0;
 
@@ -116,18 +184,28 @@ public class ERCGazeRecorder : MonoBehaviour
             targetRenderer = currentModel.GetComponent<Renderer>();
             localBounds = targetRenderer.localBounds;
             pc_sb = new StringBuilder();
-            pc_sb.AppendLine("x,y,z,targetX,targetY,targetZ,eyeX,eyeY,eyeZ,timestamp");
+            pc_sb.AppendLine("localX,localY,localZ,globalX, globalY,globalZ,targetX,targetY,targetZ," +
+                "headX,headY,headZ,headForwardX,headForwardY,headForwardZ,eyeOriginX,eyeOriginY,eyeOriginZ," +
+                "eyeDirectionX,eyeDirectionY,eyeDirectionZ,timestamp");
 
             if (!Directory.Exists(saveDir))
             {
                 Directory.CreateDirectory(saveDir);
             }
 
-            currentIndex = Range(0, targetList.Count);
-            currentTarget = targetList[currentIndex];
-            currentTarget.SetActive(true);
-
-            button.SetActive(false);
+            if (multipleTarget)
+            {
+                if (is3DObject)
+                {
+                    currentIndex = Range(0, targetList3D[currentFaceIndex].Count);
+                    currentTarget = targetList3D[currentFaceIndex][currentIndex];
+                } else
+                {
+                    currentIndex = Range(0, targetList.Count);
+                    currentTarget = targetList[currentIndex];
+                }
+                currentTarget.SetActive(true);
+            }
         }
     }
 
@@ -149,12 +227,20 @@ public class ERCGazeRecorder : MonoBehaviour
 
         if (target != null && target.name == currentModel.name)
         {
-            Vector3 tarTrans = currentTarget.transform.position;
+            Vector3 tarTrans = multipleTarget ? currentTarget.transform.position : Vector3.zero;
+            tarTrans = target.transform.InverseTransformPoint(tarTrans);
             gaze.localHitPosition = target.transform.InverseTransformPoint(gaze.hitPosition);
             Vector3 pos = gaze.localHitPosition;
             if (localBounds.Contains(pos) && gaze.targetName == target.name && gaze.targetName != "null")
             {
-                pc_sb.AppendLine($"{pos.x:F3},{-pos.y:F3},{pos.z:F3},{tarTrans.x:F3},{-tarTrans.y:F3},{tarTrans.z:F3},{gaze.headPosition.x:F3},{-gaze.headPosition.y:F3},{gaze.headPosition.z:F3},{(gaze.timestamp - startingTime):F3}");
+                pc_sb.AppendLine($"{pos.x:F6},{-pos.y:F6},{pos.z:F6}," +
+                    $"{gaze.hitPosition.x:F6},{-gaze.hitPosition.y:F6},{gaze.hitPosition.z:F6}," +
+                    $"{tarTrans.x:F6},{-tarTrans.y:F6},{tarTrans.z:F6}," +
+                    $"{gaze.headPosition.x:F6},{-gaze.headPosition.y:F6},{gaze.headPosition.z:F6}," +
+                    $"{gaze.headForward.x:F6},{gaze.headForward.y:F6},{gaze.headForward.z:F6}," +
+                    $"{gaze.eyeOrigin.x:F6},{gaze.eyeOrigin.y:F6},{gaze.eyeOrigin.z:F6}," +
+                    $"{gaze.eyeDirection.x:F6},{gaze.eyeDirection.y:F6},{gaze.eyeDirection.z:F6}," +
+                    $"{(gaze.timestamp - startingTime):F6}");
                 zSum += pos.z;
                 zNum += 1.0f;
             }
@@ -189,12 +275,13 @@ public class ERCGazeRecorder : MonoBehaviour
     public void SaveTargetCoordinates(string fileName)
     {
         StringBuilder sb = new StringBuilder();
-        sb.AppendLine("x,y,z,scaleX,scaleY,scaleZ,targetName");
+        sb.AppendLine("localX,localY,localZ,rotationW,rotationX,rotationY,rotationZ,scaleX,scaleY,scaleZ,targetName");
         foreach (GameObject target in targetList)
         {
             Vector3 pos = target.transform.localPosition;
+            Quaternion rot = target.transform.rotation;
             pos = new Vector3(pos.x, pos.y, pos.z + (zSum / zNum));
-            sb.AppendLine($"{pos.x:F3},{-pos.y:F3},{pos.z:F3},{target.transform.localScale.x},{target.transform.localScale.y},{target.transform.localScale.z},{target.name}");
+            sb.AppendLine($"{pos.x:F6},{-pos.y:F6},{pos.z:F6},{rot.w:F6},{rot.x:F6},{rot.y:F6},{rot.z:F6},{target.transform.localScale.x:F6},{target.transform.localScale.y:F6},{target.transform.localScale.z:F6},{target.name}");
         }
         File.WriteAllText(Path.Combine(saveDir, fileName), sb.ToString());
     }

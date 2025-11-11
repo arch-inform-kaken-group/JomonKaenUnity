@@ -29,7 +29,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/JAPAN/G11_12.unity
     guid: e2bd59fb50da8e642a7ae497f2d3b0f5
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/JAPAN/G13_14.unity
     guid: b42021f890602d544b9e27336e3ec8e3
   - enabled: 0
@@ -59,6 +59,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/JAPAN/TEST.unity
     guid: 4b9996aa442e1844ba8257744f444c70
+  - enabled: 1
+    path: Assets/Scenes/JAPAN/PRECISION.unity
+    guid: d618a28e88d87614291b413f13ffddb7
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 2181b6a44f6f55c43b1e38148db2a852, type: 2}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 234f8d7f01eaa3f40bc9dd86d60390ce, type: 2}
