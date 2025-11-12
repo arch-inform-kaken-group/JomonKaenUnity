@@ -241,9 +241,9 @@ public class ERCGazeRecorder : MonoBehaviour
                     $"{tarTransLocal.x:F6},{-tarTransLocal.y:F6},{tarTransLocal.z:F6}," +
                     $"{tarTrans.x:F6},{-tarTrans.y:F6},{tarTrans.z:F6}," +
                     $"{gaze.headPosition.x:F6},{-gaze.headPosition.y:F6},{gaze.headPosition.z:F6}," +
-                    $"{gaze.headForward.x:F6},{gaze.headForward.y:F6},{gaze.headForward.z:F6}," +
-                    $"{gaze.eyeOrigin.x:F6},{gaze.eyeOrigin.y:F6},{gaze.eyeOrigin.z:F6}," +
-                    $"{gaze.eyeDirection.x:F6},{gaze.eyeDirection.y:F6},{gaze.eyeDirection.z:F6}," +
+                    $"{gaze.headForward.x:F6},{-gaze.headForward.y:F6},{gaze.headForward.z:F6}," +
+                    $"{gaze.eyeOrigin.x:F6},{-gaze.eyeOrigin.y:F6},{gaze.eyeOrigin.z:F6}," +
+                    $"{gaze.eyeDirection.x:F6},{-gaze.eyeDirection.y:F6},{gaze.eyeDirection.z:F6}," +
                     $"{(gaze.timestamp - startingTime):F6},{(currentTarget != null ? currentTarget.name : "null")}");
                 zSum += pos.z;
                 zNum += 1.0f;
@@ -286,7 +286,7 @@ public class ERCGazeRecorder : MonoBehaviour
             Vector3 pos = target.transform.localPosition;
             Quaternion rot = target.transform.rotation;
             pos = new Vector3(pos.x, pos.y, pos.z + (zSum / zNum));
-            sb.AppendLine($"{pos.x:F6},{-pos.y:F6},{pos.z:F6},{rot.w:F6},{rot.x:F6},{rot.y:F6},{rot.z:F6},{target.transform.localScale.x:F6},{target.transform.localScale.y:F6},{target.transform.localScale.z:F6},{target.name}");
+            sb.AppendLine($"{pos.x:F6},{-pos.y:F6},{pos.z:F6},{rot.w:F6},{rot.x:F6},{-rot.y:F6},{rot.z:F6},{target.transform.localScale.x:F6},{-target.transform.localScale.y:F6},{target.transform.localScale.z:F6},{target.name}");
         }
         File.WriteAllText(Path.Combine(saveDir, fileName), sb.ToString());
     }
