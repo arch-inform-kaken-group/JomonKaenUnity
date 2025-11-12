@@ -40,6 +40,9 @@ public class ERCGazeRecorder : MonoBehaviour
 
     private int currentFaceIndex = 0;
 
+    [Header("Heatmap / Mesh Settings")]
+    public MeshFilter meshFilter;
+
     [SerializeField]
     private List<GameObject> targetList = new List<GameObject>();
 
@@ -184,9 +187,9 @@ public class ERCGazeRecorder : MonoBehaviour
             targetRenderer = currentModel.GetComponent<Renderer>();
             localBounds = targetRenderer.localBounds;
             pc_sb = new StringBuilder();
-            pc_sb.AppendLine("localX,localY,localZ,globalX, globalY,globalZ,targetX,targetY,targetZ," +
+            pc_sb.AppendLine("localX,localY,localZ,globalX,globalY,globalZ,localtargetX,localtargetY,localtargetZ,globaltargetX,globaltargetY,globaltargetZ," +
                 "headX,headY,headZ,headForwardX,headForwardY,headForwardZ,eyeOriginX,eyeOriginY,eyeOriginZ," +
-                "eyeDirectionX,eyeDirectionY,eyeDirectionZ,timestamp");
+                "eyeDirectionX,eyeDirectionY,eyeDirectionZ,timestamp,targetName");
 
             if (!Directory.Exists(saveDir))
             {
@@ -228,19 +231,20 @@ public class ERCGazeRecorder : MonoBehaviour
         if (target != null && target.name == currentModel.name)
         {
             Vector3 tarTrans = multipleTarget ? currentTarget.transform.position : Vector3.zero;
-            tarTrans = target.transform.InverseTransformPoint(tarTrans);
+            Vector3 tarTransLocal = target.transform.InverseTransformPoint(tarTrans);
             gaze.localHitPosition = target.transform.InverseTransformPoint(gaze.hitPosition);
             Vector3 pos = gaze.localHitPosition;
             if (localBounds.Contains(pos) && gaze.targetName == target.name && gaze.targetName != "null")
             {
                 pc_sb.AppendLine($"{pos.x:F6},{-pos.y:F6},{pos.z:F6}," +
                     $"{gaze.hitPosition.x:F6},{-gaze.hitPosition.y:F6},{gaze.hitPosition.z:F6}," +
+                    $"{tarTransLocal.x:F6},{-tarTransLocal.y:F6},{tarTransLocal.z:F6}," +
                     $"{tarTrans.x:F6},{-tarTrans.y:F6},{tarTrans.z:F6}," +
                     $"{gaze.headPosition.x:F6},{-gaze.headPosition.y:F6},{gaze.headPosition.z:F6}," +
                     $"{gaze.headForward.x:F6},{gaze.headForward.y:F6},{gaze.headForward.z:F6}," +
                     $"{gaze.eyeOrigin.x:F6},{gaze.eyeOrigin.y:F6},{gaze.eyeOrigin.z:F6}," +
                     $"{gaze.eyeDirection.x:F6},{gaze.eyeDirection.y:F6},{gaze.eyeDirection.z:F6}," +
-                    $"{(gaze.timestamp - startingTime):F6}");
+                    $"{(gaze.timestamp - startingTime):F6},{(currentTarget != null ? currentTarget.name : "null")}");
                 zSum += pos.z;
                 zNum += 1.0f;
             }
@@ -263,6 +267,7 @@ public class ERCGazeRecorder : MonoBehaviour
     public void SaveAllData()
     {
         ExportPointCloud(currentModel);
+        Export3DModel(currentModel);
         SaveTargetCoordinates("target.csv");
         Debug.Log("SAVED DATA AT: " + saveDir);
     }
@@ -284,5 +289,79 @@ public class ERCGazeRecorder : MonoBehaviour
             sb.AppendLine($"{pos.x:F6},{-pos.y:F6},{pos.z:F6},{rot.w:F6},{rot.x:F6},{rot.y:F6},{rot.z:F6},{target.transform.localScale.x:F6},{target.transform.localScale.y:F6},{target.transform.localScale.z:F6},{target.name}");
         }
         File.WriteAllText(Path.Combine(saveDir, fileName), sb.ToString());
+    }
+
+    public void Export3DModel(GameObject target)
+    {
+        Mesh mesh = meshFilter.sharedMesh;
+        string objContent = MeshToString(mesh, target);
+        File.WriteAllText(Path.Combine(saveDir, "model.obj"), objContent);
+    }
+
+    private Vector3 UnapplyUnityTransforms(Vector3 originalVector, Vector3 anglesInDegrees)
+    {
+        /* REVERSE ANY ROTATION ON MODEL */
+        Quaternion xRotation = Quaternion.AngleAxis(anglesInDegrees.x, Vector3.right);
+        Quaternion yRotation = Quaternion.AngleAxis(anglesInDegrees.y, Vector3.up);
+        Quaternion zRotation = Quaternion.AngleAxis(anglesInDegrees.z, Vector3.forward);
+
+        Vector3 rotatedVector = xRotation * originalVector;
+        rotatedVector = yRotation * rotatedVector;
+        rotatedVector = zRotation * rotatedVector;
+
+        /* NEGATE X TO FLIP THE X-AXIS */
+        return new Vector3(-rotatedVector.x, rotatedVector.y, rotatedVector.z);
+    }
+
+    private string MeshToString(Mesh mesh, GameObject target)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.Append("# Exported Gaze Object\n");
+
+        Mesh tempMesh = Instantiate(mesh);
+
+        Vector3[] transVertices = new Vector3[tempMesh.vertexCount];
+        for (int i = 0; i < tempMesh.vertices.Length; i++)
+        {
+            transVertices[i] = UnapplyUnityTransforms(tempMesh.vertices[i], target.transform.eulerAngles);
+        }
+        tempMesh.vertices = transVertices;
+
+        tempMesh.RecalculateNormals();
+
+        foreach (Vector3 vertex in tempMesh.vertices)
+        {
+            sb.Append($"v {vertex.x:F6} {vertex.y:F6} {vertex.z:F6}\n");
+        }
+
+        foreach (Vector3 normal in tempMesh.normals)
+        {
+            sb.Append($"vn {normal.x:F6} {normal.y:F6} {normal.z:F6}\n");
+        }
+
+        foreach (Vector2 uv in tempMesh.uv)
+        {
+            sb.Append($"vt {uv.x:F6} {uv.y:F6}\n");
+        }
+
+        // Write out faces (with winding order flipped)
+        for (int i = 0; i < tempMesh.subMeshCount; i++)
+        {
+            int[] triangles = tempMesh.GetTriangles(i);
+            for (int j = 0; j < triangles.Length; j += 3)
+            {
+                // Swap first and third index to reverse triangle winding
+                int temp = triangles[j];
+                triangles[j] = triangles[j + 2];
+                triangles[j + 2] = temp;
+
+                // Output face
+                sb.Append($"f {triangles[j] + 1}/{triangles[j] + 1}/{triangles[j] + 1} " +
+                            $"{triangles[j + 1] + 1}/{triangles[j + 1] + 1}/{triangles[j + 1] + 1} " +
+                            $"{triangles[j + 2] + 1}/{triangles[j + 2] + 1}/{triangles[j + 2] + 1}\n");
+            }
+        }
+
+        return sb.ToString();
     }
 }

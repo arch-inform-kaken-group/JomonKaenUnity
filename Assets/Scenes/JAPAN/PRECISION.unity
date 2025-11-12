@@ -5079,6 +5079,7 @@ MonoBehaviour:
   multipleTarget: 0
   is3DObject: 0
   numTargetPerFace: 10
+  meshFilter: {fileID: 360102676}
   targetList: []
   targetFace3D: 
   currentModel: {fileID: 360102670}
@@ -10537,6 +10538,7 @@ MonoBehaviour:
   multipleTarget: 1
   is3DObject: 1
   numTargetPerFace: 4
+  meshFilter: {fileID: 792959693}
   targetList:
   - {fileID: 916347072}
   - {fileID: 954570714}
@@ -13649,6 +13651,7 @@ MonoBehaviour:
   multipleTarget: 1
   is3DObject: 0
   numTargetPerFace: 10
+  meshFilter: {fileID: 959155811}
   targetList:
   - {fileID: 80810719}
   - {fileID: 2012546888}
@@ -18626,6 +18629,7 @@ MonoBehaviour:
   multipleTarget: 1
   is3DObject: 1
   numTargetPerFace: 6
+  meshFilter: {fileID: 1287394148}
   targetList:
   - {fileID: 1326983952}
   - {fileID: 87203745}
@@ -27346,6 +27350,7 @@ MonoBehaviour:
   multipleTarget: 1
   is3DObject: 1
   numTargetPerFace: 10
+  meshFilter: {fileID: 1862828478}
   targetList:
   - {fileID: 907338845}
   - {fileID: 453173619}
@@ -29548,6 +29553,7 @@ MonoBehaviour:
   multipleTarget: 1
   is3DObject: 0
   numTargetPerFace: 10
+  meshFilter: {fileID: 2025145333}
   targetList:
   - {fileID: 1270239142}
   - {fileID: 1374531224}
