@@ -14258,7 +14258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 700fa782b75866b42ad00ac65e539742, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numTarget: 30
+  numTarget: 60
   multipleTarget: 1
   is3DObject: 0
   numTargetPerFace: 10
@@ -30331,7 +30331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 700fa782b75866b42ad00ac65e539742, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numTarget: 30
+  numTarget: 60
   multipleTarget: 1
   is3DObject: 0
   numTargetPerFace: 10
