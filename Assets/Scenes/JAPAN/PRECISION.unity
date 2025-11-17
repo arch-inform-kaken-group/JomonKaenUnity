@@ -2315,7 +2315,7 @@ Transform:
   m_GameObject: {fileID: 159349511}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.3, z: -0.5}
+  m_LocalPosition: {x: 0, y: -0.25, z: -0.5}
   m_LocalScale: {x: 0.65, y: 0.5, z: 0.001}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2343,7 +2343,7 @@ MonoBehaviour:
   is3DObject: 0
   numTargetPerFace: 10
   isContinuous: 1
-  continuousDivisions: 300
+  continuousDivisions: 450
   continuousTime: 60
   segmentEndPoints:
   - {fileID: 405995685}

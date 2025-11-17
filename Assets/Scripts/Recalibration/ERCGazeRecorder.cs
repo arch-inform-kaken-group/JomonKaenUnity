@@ -320,8 +320,12 @@ public class ERCGazeRecorder : MonoBehaviour
             if (isContinuous)
             {
                 currentTarget.transform.position = initialPosition;
+                currentTarget.SetActive(false);
             }
-            currentTarget.SetActive(false);
+            if (multipleTarget)
+            {
+                currentTarget.SetActive(false);
+            }
             SetIsRecording(false);
         }
         StopAllCoroutines(); // Ensure any ongoing audio recording coroutines are stopped
