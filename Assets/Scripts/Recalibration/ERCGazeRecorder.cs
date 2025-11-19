@@ -248,6 +248,7 @@ public class ERCGazeRecorder : MonoBehaviour
             {
                 if (is3DObject)
                 {
+                    currentFaceIndex = 0;
                     currentIndex = Range(0, targetList3D[currentFaceIndex].Count);
                     currentTarget = targetList3D[currentFaceIndex][currentIndex];
                 } else

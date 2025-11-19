@@ -2428,7 +2428,7 @@ MonoBehaviour:
   numTargetPerFace: 10
   isContinuous: 1
   continuousDivisions: 450
-  continuousTime: 60
+  continuousTime: 30
   segmentEndPoints:
   - {fileID: 405995685}
   - {fileID: 1512999572}
