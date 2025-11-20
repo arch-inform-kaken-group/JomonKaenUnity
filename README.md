@@ -8,10 +8,6 @@ Unity application to collect eye gaze, voice & QNA data on Pottery and Dogu.
 git clone --depth 1 https://github.com/luhouyang/JomonKaenGazeData.git
 ```
 
-## Usage
-
-[**LATEST DOCUMENTATION v3**](https://docs.google.com/document/d/1hs8zHF2yzrMDRXTj319fBOcU91ZXBHdh00ar9nUG-KI/edit?usp=sharing)
-
 ## CHANGELOG
 
 **v3 6 JUNE 2025**
