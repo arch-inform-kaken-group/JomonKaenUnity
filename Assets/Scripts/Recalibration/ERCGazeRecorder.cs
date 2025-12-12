@@ -50,7 +50,7 @@ public class ERCGazeRecorder : MonoBehaviour
     private int continuousDivisions = 300; // For 4 segments, 15 seconds each, update rate of 50ms
 
     [SerializeField]
-    private float continuousTime = 60.0f; // For 4 segments, 15 seconds each, update rate of 50ms
+    private float continuousTime = 0.0f; // For 4 segments, 15 seconds each, update rate of 50ms
 
     [SerializeField]
     private List<GameObject> segmentEndPoints = new List<GameObject>();
