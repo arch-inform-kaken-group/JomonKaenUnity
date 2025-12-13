@@ -108,6 +108,7 @@ public class QNAModelController : MonoBehaviour
                 {
                     models[j].GetComponent<QNAModelGazeRecorder>().sessionPath = sessionPath;
                     models[j].GetComponent<EyeTrackingTarget>().enabled = false;
+                    models[j].GetComponent<ExtendedEyeGazeDataProvider>().enabled = false;
                     models[j].SetActive(false);
                 }
             }
@@ -196,7 +197,8 @@ public class QNAModelController : MonoBehaviour
             qnaPrompt.SetActive(true);
             startButton.SetActive(false);
             currentModel.GetComponent<QNAModelGazeRecorder>().SetIsRecording(true);
-            currentModel.GetComponent<EyeTrackingTarget>().enabled = true;
+            //currentModel.GetComponent<EyeTrackingTarget>().enabled = true;
+            currentModel.GetComponent<ExtendedEyeGazeDataProvider>().enabled = true;
         }
     }
 
@@ -206,7 +208,8 @@ public class QNAModelController : MonoBehaviour
         {
             currentModel.GetComponent<QNAModelGazeRecorder>().SetIsRecording(false);
             currentModel.GetComponent<QNAModelGazeRecorder>().SaveAllData();
-            currentModel.GetComponent<EyeTrackingTarget>().enabled = false;
+            //currentModel.GetComponent<EyeTrackingTarget>().enabled = false;
+            currentModel.GetComponent<ExtendedEyeGazeDataProvider>().enabled = false;
         }
     }
 

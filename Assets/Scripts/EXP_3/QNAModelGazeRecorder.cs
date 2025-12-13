@@ -1,15 +1,16 @@
 ﻿#region Version 2 | Cleaned Up Code from Version 1 | LU HOU YANG
-using System;
-using System.IO;
-using System.Text;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Microsoft.MixedReality.Toolkit;
 using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.SampleGazeData;
 using Microsoft.MixedReality.Toolkit.Utilities;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.Windows.Speech;
 
 /// <summary>
@@ -139,8 +140,26 @@ public class QNAModelGazeRecorder : MonoBehaviour
     private bool isPlayingAudio = false;
     private float audioTimer = 1.0f;
 
+    // Eye tracker sampling rate
+    private ExtendedEyeGazeDataProvider extendedEyeGazeDataProvider;
+    public bool highSamplingRate = true;
+    private DateTime lastRecordedTimestamp;
+    private List<ExtendedEyeGazeDataProvider.GazeReading> readingBuffer = new List<ExtendedEyeGazeDataProvider.GazeReading>();
+    private DateTime hardwareStartTime;
+
     void Start()
     {
+        if (extendedEyeGazeDataProvider == null)
+        {
+            extendedEyeGazeDataProvider = FindObjectOfType<ExtendedEyeGazeDataProvider>();
+            if (extendedEyeGazeDataProvider == null)
+            {
+                Debug.LogError("ERCGazeRecorder: Could not find ExtendedEyeGazeDataProvider in the scene!");
+            }
+        }
+
+        lastRecordedTimestamp = DateTime.Now;
+
         heatmapSource = GetComponent<DrawOn3DTexture>();
 
         GameObject audioObject = new GameObject("AudioRecorder");
@@ -189,7 +208,28 @@ public class QNAModelGazeRecorder : MonoBehaviour
             timer -= Time.deltaTime;
 
             // Pass the gazed voxel ID to RecordGazeData
-            RecordGazeData(gazedObject);
+            //RecordGazeData(gazedObject);
+            // 90Hz = ~0.011111s per sample.
+            // Estimate how many samples accumulated since last frame based on Time.unscaledDeltaTime
+            // Add +2 for safety margin of ~22ms
+            float expectedSamples = Time.unscaledDeltaTime * 90.0f;
+            int dynamicLimit = Mathf.CeilToInt(expectedSamples) + 20;
+
+            int sampleCount = extendedEyeGazeDataProvider.GetWorldSpaceGazeReadingsSince(lastRecordedTimestamp, ExtendedEyeGazeDataProvider.GazeType.Combined, readingBuffer, dynamicLimit);
+
+            if (sampleCount > 0)
+            {
+                foreach (var reading in readingBuffer)
+                {
+                    RecordHighSampleGazeData(reading, gameObject);
+                    lastRecordedTimestamp = reading.Timestamp;
+                }
+            }
+            else if (Application.isEditor)
+            {
+                var singleReading = extendedEyeGazeDataProvider.GetWorldSpaceGazeReading(ExtendedEyeGazeDataProvider.GazeType.Combined, DateTime.Now);
+                RecordHighSampleGazeData(singleReading, gameObject);
+            }
 
             promptObject.GetComponent<TextMeshPro>().SetText($"VIEWING TIME: {(timer - recordVoiceDuration):F1}");
 
@@ -275,7 +315,9 @@ public class QNAModelGazeRecorder : MonoBehaviour
 
             /* Initialize point cloud data header */
             pc_sb = new StringBuilder();
-            pc_sb.AppendLine("x,y,z,timestamp,gazedVoxelID");
+            pc_sb.AppendLine("x,y,z,timestamp,globalX,globalY,globalZ," +
+                "headX,headY,headZ,headForwardX,headForwardY,headForwardZ,eyeOriginX,eyeOriginY,eyeOriginZ," +
+                "eyeDirectionX,eyeDirectionY,eyeDirectionZ");
 
             /* Create data directory */
             saveDir = Path.Combine(Application.persistentDataPath, sessionPath, currentSession.selectedObjectName);
@@ -306,50 +348,108 @@ public class QNAModelGazeRecorder : MonoBehaviour
     }
 
     // Record Eye Gaze Data
-    private void RecordGazeData(GameObject target)
-    {
-        /* GET EYE GAZE PROVIDER */
-        var eyeProvider = CoreServices.InputSystem?.EyeGazeProvider;
-        if (eyeProvider == null) return;
+    //private void RecordGazeData(GameObject target)
+    //{
+    //    /* GET EYE GAZE PROVIDER */
+    //    var eyeProvider = CoreServices.InputSystem?.EyeGazeProvider;
+    //    if (eyeProvider == null) return;
 
-        /* CREATE NEW GAZE DATA */
+    //    /* CREATE NEW GAZE DATA */
+    //    var gaze = new GazeData
+    //    {
+    //        timestamp = Time.unscaledTimeAsDouble - startingTime,
+    //        headPosition = CameraCache.Main.transform.position,
+    //        headForward = CameraCache.Main.transform.forward,
+    //        eyeOrigin = eyeProvider.GazeOrigin,
+    //        eyeDirection = eyeProvider.GazeDirection,
+    //        hitPosition = eyeProvider.IsEyeTrackingEnabledAndValid ? eyeProvider.HitPosition : Vector3.zero,
+    //        targetName = target != null ? target.name : "null",
+    //    };
+
+    //    /* CHECK IF GAZE HIT ON SELECTED MODEL */
+    //    if (target != null && target.name == currentSession.selectedObjectName)
+    //    {
+    //        globalHitPosition = gaze.hitPosition;
+    //        hitNormal = gaze.eyeDirection;
+
+    //        /* CONVERT GAZE HIT FROM WORLD COORDINATE TO LOCAL COORDINATE */
+    //        gaze.localHitPosition = target.transform.InverseTransformPoint(gaze.hitPosition);
+    //        Vector3 pos = gaze.localHitPosition;
+
+    //        /* CHECK IF GAZE HIT IS ON SELECTED MODEL */
+    //        if (localBounds.Contains(pos) && gaze.targetName == target.name && gaze.targetName != "null")
+    //        {
+    //            /* REVERT TRANSFORMS WHEN IMPORTING MODEL */
+    //            pos = UnapplyUnityTransforms(pos, target.transform.eulerAngles);
+
+    //            localHitPosition = pos;
+
+    //            /* ADD GAZE DATA */
+    //            pc_sb.AppendLine($"{pos.x:F6},{pos.y:F6},{pos.z:F6},{gaze.timestamp:F6}");
+    //        }
+    //    }
+    //    else
+    //    {
+    //        gaze.localHitPosition = Vector3.zero;
+    //    }
+    //}
+
+    private GazeData RecordHighSampleGazeData(ExtendedEyeGazeDataProvider.GazeReading reading, GameObject target)
+    {
         var gaze = new GazeData
         {
-            timestamp = Time.unscaledTimeAsDouble - startingTime,
-            headPosition = CameraCache.Main.transform.position,
-            headForward = CameraCache.Main.transform.forward,
-            eyeOrigin = eyeProvider.GazeOrigin,
-            eyeDirection = eyeProvider.GazeDirection,
-            hitPosition = eyeProvider.IsEyeTrackingEnabledAndValid ? eyeProvider.HitPosition : Vector3.zero,
+            headPosition = reading.HeadPosition,
+            headForward = reading.HeadForward,
+            eyeOrigin = reading.EyePosition,
+            eyeDirection = reading.GazeDirection,
+            hitPosition = reading.IsValid ? reading.HitPosition : Vector3.zero,
             targetName = target != null ? target.name : "null",
         };
 
-        /* CHECK IF GAZE HIT ON SELECTED MODEL */
-        if (target != null && target.name == currentSession.selectedObjectName)
+        // Sync to First Packet
+        if (reading.Timestamp != DateTime.MinValue)
         {
-            globalHitPosition = gaze.hitPosition;
-            hitNormal = gaze.eyeDirection;
-
-            /* CONVERT GAZE HIT FROM WORLD COORDINATE TO LOCAL COORDINATE */
-            gaze.localHitPosition = target.transform.InverseTransformPoint(gaze.hitPosition);
-            Vector3 pos = gaze.localHitPosition;
-
-            /* CHECK IF GAZE HIT IS ON SELECTED MODEL */
-            if (localBounds.Contains(pos) && gaze.targetName == target.name && gaze.targetName != "null")
+            // If this is the first packet of the session, lock the start time
+            if (hardwareStartTime == DateTime.MinValue)
             {
-                /* REVERT TRANSFORMS WHEN IMPORTING MODEL */
-                pos = UnapplyUnityTransforms(pos, target.transform.eulerAngles);
-
-                localHitPosition = pos;
-
-                /* ADD GAZE DATA */
-                pc_sb.AppendLine($"{pos.x:F6},{pos.y:F6},{pos.z:F6},{gaze.timestamp:F6}");
+                hardwareStartTime = reading.Timestamp;
             }
+
+            // Calculate relative time from the locked start time
+            gaze.timestamp = (reading.Timestamp - hardwareStartTime).TotalSeconds;
         }
         else
         {
-            gaze.localHitPosition = Vector3.zero;
+            gaze.timestamp = Time.unscaledTimeAsDouble - startingTime;
         }
+
+        if (gaze.hitPosition != Vector3.zero)
+        {
+            Vector3 rawLocalPos = target.transform.InverseTransformPoint(gaze.hitPosition);
+            gaze.localHitPosition = UnapplyUnityTransforms(rawLocalPos, target.transform.eulerAngles);
+            Vector3 pos = gaze.localHitPosition;
+
+            Vector3 eyeOriginGlobal = gaze.eyeOrigin;
+            Vector3 eyeDirGlobal = gaze.eyeDirection;
+            Vector3 hitPosGlobal = gaze.hitPosition;
+
+            pc_sb.AppendLine($"{pos.x:F6},{pos.y:F6},{pos.z:F6}," +
+                $"{hitPosGlobal.x:F6},{hitPosGlobal.y:F6},{hitPosGlobal.z:F6}," + // Global Hit
+                $"{gaze.headPosition.x:F6},{gaze.headPosition.y:F6},{gaze.headPosition.z:F6}," +
+                $"{gaze.headForward.x:F6},{gaze.headForward.y:F6},{gaze.headForward.z:F6}," +
+                $"{eyeOriginGlobal.x:F6},{eyeOriginGlobal.y:F6},{eyeOriginGlobal.z:F6}," + // Global Eye
+                $"{eyeDirGlobal.x:F6},{eyeDirGlobal.y:F6},{eyeDirGlobal.z:F6}," + // Global Dir
+                $"{(gaze.timestamp):F9}");
+        }
+
+        if (gaze.localHitPosition != Vector3.zero)
+        {
+            localHitPosition = gaze.localHitPosition;
+            globalHitPosition = gaze.hitPosition;
+            hitNormal = gaze.eyeDirection;
+        }
+
+        return gaze;
     }
 
     #region AUDIO DATA
