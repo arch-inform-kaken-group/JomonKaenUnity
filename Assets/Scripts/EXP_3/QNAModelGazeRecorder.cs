@@ -433,13 +433,13 @@ public class QNAModelGazeRecorder : MonoBehaviour
             Vector3 eyeDirGlobal = gaze.eyeDirection;
             Vector3 hitPosGlobal = gaze.hitPosition;
 
-            pc_sb.AppendLine($"{pos.x:F6},{pos.y:F6},{pos.z:F6}," +
+            pc_sb.AppendLine($"{pos.x:F6},{pos.y:F6},{pos.z:F6},{(gaze.timestamp):F9}," +
                 $"{hitPosGlobal.x:F6},{hitPosGlobal.y:F6},{hitPosGlobal.z:F6}," + // Global Hit
                 $"{gaze.headPosition.x:F6},{gaze.headPosition.y:F6},{gaze.headPosition.z:F6}," +
                 $"{gaze.headForward.x:F6},{gaze.headForward.y:F6},{gaze.headForward.z:F6}," +
                 $"{eyeOriginGlobal.x:F6},{eyeOriginGlobal.y:F6},{eyeOriginGlobal.z:F6}," + // Global Eye
-                $"{eyeDirGlobal.x:F6},{eyeDirGlobal.y:F6},{eyeDirGlobal.z:F6}," + // Global Dir
-                $"{(gaze.timestamp):F9}");
+                $"{eyeDirGlobal.x:F6},{eyeDirGlobal.y:F6},{eyeDirGlobal.z:F6}"// Global Dir
+              );
         }
 
         if (gaze.localHitPosition != Vector3.zero)
@@ -583,7 +583,7 @@ public class QNAModelGazeRecorder : MonoBehaviour
     public void SaveAllData()
     {
         ExportPointCloud(QNAModelController.currentModel);
-        Export3DModel(QNAModelController.currentModel);
+        //Export3DModel(QNAModelController.currentModel);
         SaveQuestionnaireAnswers(); // Save the answers
         Debug.Log("SAVED DATA AT: " + saveDir);
     }
